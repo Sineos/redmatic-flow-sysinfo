@@ -11,11 +11,16 @@ A Node Red flow especially for [RedMatic](https://github.com/hobbyquaker/RedMati
  - CCU Duty Cycle
  - CCU RSSI
 
+## Additional Nodes
+
+For the system information the [Node OS](https://flows.nodered.org/node/node-red-contrib-os) is used.
+
 ## Flow
 
-<img src="https://raw.githubusercontent.com/Sineos/node-red-contrib-weatherman/master/src_readme/flow.png" width="400"/>
+<img src="https://raw.githubusercontent.com/Sineos/redmatic-flow-sysinfo/master/src_readme/flow.png" width="400"/>
 
 ### Import Flow
+
 Copy content of the [raw flow.md](https://raw.githubusercontent.com/Sineos/redmatic-flow-sysinfo/master/flow.md) file and import via clipboard
 
 ## Dashboard
