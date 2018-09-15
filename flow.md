@@ -133,7 +133,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Bytes to KB / MB / GB ...",
-        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.totalmem);\nreturn msg;",
+        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1000,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.totalmem);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -149,7 +149,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Bytes to KB / MB / GB ...",
-        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.freemem);\nreturn msg;",
+        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1000,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.freemem);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -978,7 +978,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Reformat payload",
-        "func": "'use strict';\nfunction formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nvar myArray = msg.payload;\nvar msg2 = {}, \n    msg3 = {};\n\n// Reformat values to human readable\nvar newArray = myArray.map(function(v) {\n  return {\n    filesystem: v.filesystem,\n    size: formatBytes(v.size * 1024),\n    used: formatBytes(v.used * 1024),\n    available: formatBytes(v.available * 1024),\n    usedPercent: (v.capacity * 100),\n    mount: v.mount\n  };\n});\nmsg2.payload = newArray;\n\n// Find '/usr/local'\nvar index = newArray.findIndex(x => x.mount ==='/usr/local');\nmsg3.payload = newArray[index].usedPerecent;\n\nreturn [msg2, msg3];",
+        "func": "'use strict';\nfunction formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nvar myArray = msg.payload;\nvar msg2 = {}, \n    msg3 = {};\n\n// Reformat values to human readable\nvar newArray = myArray.map(function(v) {\n  return {\n    filesystem: v.filesystem,\n    size: formatBytes(v.size * 1024),\n    used: formatBytes(v.used * 1024),\n    available: formatBytes(v.available * 1024),\n    usedPercent: (v.capacity * 100),\n    mount: v.mount\n  };\n});\nmsg2.payload = newArray;\n\n// Find '/usr/local'\nvar index = newArray.findIndex(x => x.mount ==='/usr/local');\nmsg3.payload = newArray[index].usedPercent;\n\nreturn [msg2, msg3];",
         "outputs": 2,
         "noerr": 0,
         "x": 1250,
@@ -1001,7 +1001,7 @@
         "order": 3,
         "width": "8",
         "height": "12",
-        "format": "<script>\n'use strict';\nfunction diskColor() {\n  $('#myTableDisk td.myUsage').each(function(){\n    if (parseInt($(this).text()) <= 75) {\n      $(this).css('background-color', '#00cc44');\n    } else if (parseInt($(this).text()) >= 76 && parseInt($(this).text()) <= 90) {\n      $(this).css('background-color', '#ff8c66');\n    } else if (parseInt($(this).text()) >= 91) {\n      $(this).css('background-color', '#ff6666');\n    }\n  });\n}\n\n(function(scope){\n  scope.$watch('msg', function(msg) {\n    if (msg != null) {\n      diskColor();\n    }\n  });\n}(scope));\n\nangular.element(document).ready(function() {\n  diskColor();\n});\n</script>\n\n<h3>Disk Free</h3>\n<table id=\"myTableDisk\" width=\"100%\" border=\"1\">\n  <tbody>\n    <tr>\n      <th scope=\"col\">Mount</th>\n      <th scope=\"col\">Size</th>\n      <th scope=\"col\">Used</th>\n      <th scope=\"col\">Free</th>\n      <th scope=\"col\">Use %</th>\n    </tr>\n    <tr ng-repeat=\"mount in msg.payload\">\n      <th align=\"left\" scope=\"row\">{{mount.mount}}</th>\n      <td align=\"right\">{{mount.size}}</td>\n      <td align=\"right\">{{mount.used}}</td>\n      <td align=\"right\">{{mount.available}}</td>\n      <td align=\"right\" class=\"myUsage\">{{mount.usedPercent}}</td>\n    </tr>\n  </tbody>\n</table>\n",
+        "format": "<h3>Disk Free</h3>\n<table id=\"myTableDisk\" width=\"100%\" border=\"1\">\n  <tbody>\n    <tr>\n      <th scope=\"col\">Mount</th>\n      <th scope=\"col\">Size</th>\n      <th scope=\"col\">Used</th>\n      <th scope=\"col\">Free</th>\n      <th scope=\"col\">Use %</th>\n    </tr>\n    <tr ng-repeat=\"mount in msg.payload\">\n      <th   align=\"left\" scope=\"row\">{{mount.mount}}</th>\n      <td   align=\"right\">{{mount.size}}</td>\n      <td   align=\"right\">{{mount.used}}</td>\n      <td   align=\"right\">{{mount.available}}</td>\n      <td   ng-class=\"{'excellent': mount.usedPercent < 75,\n                       'average': mount.usedPercent >= 76 && mount.usedPercent <= 95,\n                       'bad': mount.usedPercent >= 96}\"\n            align=\"right\">{{mount.usedPercent}}</td>\n    </tr>\n  </tbody>\n</table>",
         "storeOutMessages": true,
         "fwdInMessages": false,
         "templateScope": "local",
@@ -1273,7 +1273,7 @@
         "order": 3,
         "width": "6",
         "height": "8",
-        "format": "<script>\n'use strict';\nfunction RSSIcolor() {\n  $('#myTable td.myDB').each(function(){\n    if (parseInt($(this).text()) >= -45) {\n      $(this).css('background-color', '#00cc44');\n    } else if (parseInt($(this).text()) <= -46 && parseInt($(this).text()) >= -85) {\n      $(this).css('background-color', '#66ff66');\n    } else if (parseInt($(this).text()) <= -86 && parseInt($(this).text()) >= -100) {\n      $(this).css('background-color', '#ff8c66');\n    } else if (parseInt($(this).text()) <= -101) {\n      $(this).css('background-color', '#ff6666');\n    }\n  });\n}\n\n(function(scope){\n  scope.$watch('msg', function(msg) {\n    if (msg != null) {\n      RSSIcolor();\n    }\n  });\n}(scope));\n\nangular.element(document).ready(function() {\n  RSSIcolor();\n});\n</script>\n\n<h3>RSSI Values</h3>\n<table id=\"myTable\" width=\"100%\" border=\"1\">\n  <tbody>\n    <tr>\n      <th scope=\"col\">&nbsp;</th>\n      <th colspan=\"2\" scope=\"col\">{{msg.ccu}}</th>\n    </tr>\n    <tr ng-repeat=\"(key, value) in msg.payload\" >\n      <th scope=\"row\">{{key}}</th>\n      <td class=\"myDB\" align=\"center\">{{value[0]}}</td>\n      <td class=\"myDB\" align=\"center\">{{value[1]}}</td>\n    </tr>\n  </tbody>\n</table>",
+        "format": "<h3>RSSI Values</h3>\n<table id=\"myTable\" width=\"100%\" border=\"1\">\n  <tbody>\n    <tr>\n      <th class=\"ng-class: excellent;\" scope=\"col\">&nbsp;</th>\n      <th ng-class=\"excellent\" colspan=\"2\" scope=\"col\">{{msg.ccu}}</th>\n    </tr>\n    <tr ng-repeat=\"(key, value) in msg.payload\" >\n      <th scope=\"row\">{{key}}</th>\n      <td   ng-class=\"{'excellent': value[0] >= -50,\n                       'good': value[0] <= -51 && value[0] >= -100,\n                       'average':  value[0] <= -101 && value[0] >= -120,\n                       'bad':  value[0] <= -121}\"\n            align=\"center\">{{value[0]}}</td>\n      <td   ng-class=\"{'excellent': value[1] >= -50,\n                       'good': value[1] <= -51 && value[1] >= -100,\n                       'average':  value[1] <= -101 && value[1] >= -120,\n                       'bad':  value[1] <= -120}\"\n            align=\"center\">{{value[1]}}</td>\n    </tr>\n  </tbody>\n</table>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
@@ -1284,12 +1284,31 @@
         ]
     },
     {
+        "id": "6ae77c11.8e8c54",
+        "type": "ui_template",
+        "z": "721e71e2.b201b8",
+        "group": "937d90ca.8d8b",
+        "name": "Defince CSS Style",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n.excellent {background-color:#00cc44;}\n.good {background-color:#66ff66;}\n.average {background-color:#ff8c66;}\n.bad {background-color:#ff6666;}\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "global",
+        "x": 470,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "6719ae8b.ab2f18",
         "type": "ui_group",
         "z": "",
         "name": "CPU Load",
         "tab": "189e0ea3.dd5dd1",
-        "order": 2,
+        "order": 3,
         "disp": true,
         "width": "6"
     },
@@ -1299,7 +1318,7 @@
         "z": "",
         "name": "Memory",
         "tab": "189e0ea3.dd5dd1",
-        "order": 3,
+        "order": 4,
         "disp": true,
         "width": "6"
     },
@@ -1340,6 +1359,7 @@
         "z": "",
         "name": "CCU",
         "tab": "189e0ea3.dd5dd1",
+        "order": 2,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -1350,8 +1370,19 @@
         "z": "",
         "name": "Disk",
         "tab": "189e0ea3.dd5dd1",
+        "order": 5,
         "disp": true,
         "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "937d90ca.8d8b",
+        "type": "ui_group",
+        "z": "",
+        "name": "Duty Cycle",
+        "tab": "8153eb0.fe96118",
+        "disp": true,
+        "width": "6",
         "collapse": false
     },
     {
@@ -1360,5 +1391,13 @@
         "z": "",
         "name": "System",
         "icon": "computer"
+    },
+    {
+        "id": "8153eb0.fe96118",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Funk",
+        "icon": "dashboard",
+        "order": 4
     }
 ]
