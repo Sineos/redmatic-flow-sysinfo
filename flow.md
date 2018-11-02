@@ -197,7 +197,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Seconds to d/h/min/s",
-        "func": "var seconds = msg.payload.uptime\nvar msg2 = {};\n\nvar days = Math.floor(seconds / (3600*24));\nseconds  -= days*3600*24;\nvar hrs   = Math.floor(seconds / 3600);\nseconds  -= hrs*3600;\nvar mnts = Math.floor(seconds / 60);\nseconds  -= mnts*60;\nmsg2.payload = days + \"d / \" + hrs +\"h / \" + mnts + \"min / \" + seconds + \"s\";\n\nreturn msg2;",
+        "func": "var seconds = msg.payload.uptime;\nvar msg2 = {};\n\nvar days = Math.floor(seconds / (3600 * 24));\nseconds -= days * 3600 * 24;\nvar hrs = Math.floor(seconds / 3600);\nseconds -= hrs * 3600;\nvar mnts = Math.floor(seconds / 60);\nseconds -= mnts * 60;\nmsg2.payload = days + 'd / ' + hrs +'h / ' + mnts + 'min / ' + seconds + 's';\n\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 1240,
@@ -220,7 +220,7 @@
         "label": "Uptime",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1520,
+        "x": 1540,
         "y": 180,
         "wires": []
     },
@@ -236,7 +236,7 @@
         "label": "Hostname",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1510,
+        "x": 1530,
         "y": 220,
         "wires": []
     },
@@ -252,7 +252,7 @@
         "label": "Platform",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1520,
+        "x": 1540,
         "y": 260,
         "wires": []
     },
@@ -268,7 +268,7 @@
         "label": "Arch",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1530,
+        "x": 1550,
         "y": 300,
         "wires": []
     },
@@ -284,7 +284,7 @@
         "label": "Kernel",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1530,
+        "x": 1550,
         "y": 340,
         "wires": []
     },
@@ -300,7 +300,7 @@
         "label": "No. of Cores",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1510,
+        "x": 1530,
         "y": 400,
         "wires": []
     },
@@ -316,7 +316,7 @@
         "label": "CPU",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1530,
+        "x": 1550,
         "y": 440,
         "wires": []
     },
@@ -558,7 +558,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Extract RSSI values",
-        "func": "'use strict';\nvar rssi = msg.payload;\nvar myRSSIObj = {},\n    myDBValues = [],\n    ccu = '',\n    msg2 = {};\n\n//ccu = Object.keys(rssi)[Object.keys(rssi).length-1];\nccu = Object.keys(rssi).find(function(key) {\n  return key.endsWith('0');\n});\n\nfor (var key of Object.keys(rssi)) {\n  if (key !== ccu) {\n    myDBValues.push(rssi[key][ccu][1]);\n    myDBValues.push(rssi[ccu][key][0]);\n    myRSSIObj[key] = myDBValues;\n    myDBValues = [];\n  }\n}\n\nmsg2 = {\n  payload: myRSSIObj,\n  topic: msg.topic,\n  ccu: ccu\n};\n\nreturn msg2;\n",
+        "func": "'use strict';\nvar rssi = msg.payload;\nvar myRSSIObj = {},\n    myDBValues = [],\n    ccu = '',\n    msg2 = {};\n\n//ccu = Object.keys(rssi)[Object.keys(rssi).length-1];\nccu = Object.keys(rssi).find(function(key) {\n  return key.endsWith('0');\n});\n\nfor (var key of Object.keys(rssi)) {\n  if (key !== ccu) {\n    myDBValues.push(rssi[key][ccu][1]);\n    if (rssi[key][ccu][0] < 0) {\n       myDBValues.push(rssi[key][ccu][0]); \n    } else if (rssi[key][ccu][0] > 0) {\n        myDBValues.push('n/a');\n    }\n    myRSSIObj[key] = myDBValues;\n    myDBValues = [];\n  }\n}\n\nmsg2 = {\n  payload: myRSSIObj,\n  topic: msg.topic,\n  ccu: ccu\n};\n\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 420,
@@ -632,7 +632,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 1530,
+        "x": 1550,
         "y": 621,
         "wires": [
             [],
@@ -661,7 +661,7 @@
         ],
         "seg1": "30",
         "seg2": "70",
-        "x": 1530,
+        "x": 1550,
         "y": 661,
         "wires": []
     },
@@ -1005,7 +1005,7 @@
         "storeOutMessages": true,
         "fwdInMessages": false,
         "templateScope": "local",
-        "x": 1520,
+        "x": 1540,
         "y": 520,
         "wires": [
             []
@@ -1033,7 +1033,7 @@
         ],
         "seg1": "75",
         "seg2": "90",
-        "x": 1480,
+        "x": 1500,
         "y": 560,
         "wires": []
     },
@@ -1273,7 +1273,7 @@
         "order": 3,
         "width": "6",
         "height": "8",
-        "format": "<h3>RSSI Values</h3>\n<table id=\"myTable\" width=\"100%\" border=\"1\">\n  <tbody>\n    <tr>\n      <th class=\"ng-class: excellent;\" scope=\"col\">&nbsp;</th>\n      <th ng-class=\"excellent\" colspan=\"2\" scope=\"col\">{{msg.ccu}}</th>\n    </tr>\n    <tr ng-repeat=\"(key, value) in msg.payload\" >\n      <th scope=\"row\">{{key}}</th>\n      <td   ng-class=\"{'excellent': value[0] >= -50,\n                       'good': value[0] <= -51 && value[0] >= -100,\n                       'average':  value[0] <= -101 && value[0] >= -120,\n                       'bad':  value[0] <= -121}\"\n            align=\"center\">{{value[0]}}</td>\n      <td   ng-class=\"{'excellent': value[1] >= -50,\n                       'good': value[1] <= -51 && value[1] >= -100,\n                       'average':  value[1] <= -101 && value[1] >= -120,\n                       'bad':  value[1] <= -120}\"\n            align=\"center\">{{value[1]}}</td>\n    </tr>\n  </tbody>\n</table>",
+        "format": "<h3>RSSI Values</h3>\n<table id=\"myTable\" width=\"100%\" border=\"1\">\n  <tbody>\n    <tr>\n      <th colspan=\"1\" rowspan=\"2\" class=\"ng-class: excellent;\" scope=\"col\">&nbsp;</th>\n      <th ng-class=\"excellent\" colspan=\"2\" scope=\"col\">{{msg.ccu}}</th>\n    </tr>\n    <tr>\n      <td style=\"vertical-align: middle; text-align: center;\"><i class=\"fa fa-arrow-circle-up\" aria-hidden=\"true\"></i></td>\n      <td style=\"vertical-align: middle; text-align: center;\"><i class=\"fa fa-arrow-circle-down\" aria-hidden=\"true\"></i></td>\n    <tr ng-repeat=\"(key, value) in msg.payload\" >\n      <th scope=\"row\">{{key}}</th>\n      <td   ng-class=\"{'excellent': value[0] >= -50,\n                       'good': value[0] <= -51 && value[0] >= -100,\n                       'average':  value[0] <= -101 && value[0] >= -120,\n                       'bad':  value[0] <= -121}\"\n            align=\"center\">{{value[0]}}</td>\n      <td   ng-class=\"{'excellent': value[1] >= -50,\n                       'good': value[1] <= -51 && value[1] >= -100,\n                       'average':  value[1] <= -101 && value[1] >= -120,\n                       'bad':  value[1] <= -120}\"\n            align=\"center\">{{value[1]}}</td>\n    </tr>\n  </tbody>\n</table>\n",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
@@ -1303,12 +1303,353 @@
         ]
     },
     {
+        "id": "470b812a.842fe8",
+        "type": "ccu-rpc-event",
+        "z": "721e71e2.b201b8",
+        "name": "UNREACH",
+        "iface": "BidCos-RF",
+        "ccuConfig": "38263145.35ea0e",
+        "rooms": "",
+        "roomsRx": "str",
+        "functions": "",
+        "functionsRx": "str",
+        "device": "",
+        "deviceRx": "str",
+        "deviceName": "",
+        "deviceNameRx": "str",
+        "deviceType": "",
+        "deviceTypeRx": "str",
+        "channel": "",
+        "channelRx": "str",
+        "channelName": "",
+        "channelNameRx": "str",
+        "channelType": "MAINTENANCE",
+        "channelTypeRx": "str",
+        "datapoint": "UNREACH",
+        "datapointRx": "str",
+        "change": true,
+        "working": false,
+        "cache": true,
+        "topic": "${deviceName}",
+        "x": 100,
+        "y": 760,
+        "wires": [
+            [
+                "d58143d1.38e628"
+            ]
+        ]
+    },
+    {
+        "id": "d58143d1.38e628",
+        "type": "switch",
+        "z": "721e71e2.b201b8",
+        "name": "if true",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 270,
+        "y": 760,
+        "wires": [
+            [
+                "651b2639.ed8ce",
+                "e99167a0.ceaf58"
+            ]
+        ]
+    },
+    {
+        "id": "651b2639.ed8ce",
+        "type": "combine-list",
+        "z": "721e71e2.b201b8",
+        "name": "HTML Table",
+        "topic": "",
+        "payload": "ul",
+        "columns": [
+            "topic"
+        ],
+        "sort": "topic",
+        "order": "asc",
+        "defer": 250,
+        "timeout": 0,
+        "distinction": "topic",
+        "x": 430,
+        "y": 780,
+        "wires": [
+            [
+                "697032da.53fe74"
+            ]
+        ]
+    },
+    {
+        "id": "697032da.53fe74",
+        "type": "ui_template",
+        "z": "721e71e2.b201b8",
+        "group": "40844f8.1cf98b",
+        "name": "List UNREACH Devices:",
+        "order": 2,
+        "width": "6",
+        "height": "3",
+        "format": "<h3>UNREACH Devices</h3>\n<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 650,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e99167a0.ceaf58",
+        "type": "combine-statistic",
+        "z": "721e71e2.b201b8",
+        "name": "Count",
+        "topic": "",
+        "operator": "len",
+        "defer": 250,
+        "timeout": 0,
+        "distinction": "topic",
+        "x": 450,
+        "y": 740,
+        "wires": [
+            [
+                "91cfef89.1ffbe8"
+            ]
+        ]
+    },
+    {
+        "id": "34d182a2.cd93ee",
+        "type": "comment",
+        "z": "721e71e2.b201b8",
+        "name": "CCU UNREACH",
+        "info": "",
+        "x": 120,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "91cfef89.1ffbe8",
+        "type": "ui_gauge",
+        "z": "721e71e2.b201b8",
+        "name": "Gauge",
+        "group": "40844f8.1cf98b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Count UNREACH",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "1",
+        "x": 710,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "c36f11c1.a56ea",
+        "type": "ccu-rpc-event",
+        "z": "721e71e2.b201b8",
+        "name": "RPC event STICKY_UNREACH",
+        "iface": "BidCos-RF",
+        "ccuConfig": "38263145.35ea0e",
+        "rooms": "",
+        "roomsRx": "str",
+        "functions": "",
+        "functionsRx": "str",
+        "device": "",
+        "deviceRx": "str",
+        "deviceName": "",
+        "deviceNameRx": "str",
+        "deviceType": "",
+        "deviceTypeRx": "str",
+        "channel": "",
+        "channelRx": "str",
+        "channelName": "",
+        "channelNameRx": "str",
+        "channelType": "MAINTENANCE",
+        "channelTypeRx": "str",
+        "datapoint": "STICKY_UNREACH",
+        "datapointRx": "str",
+        "change": false,
+        "working": false,
+        "cache": true,
+        "topic": "${CCU}/${Interface}/${channelName}/${datapoint}",
+        "x": 970,
+        "y": 760,
+        "wires": [
+            [
+                "1e6c3c3f.56ab14"
+            ]
+        ]
+    },
+    {
+        "id": "1e6c3c3f.56ab14",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "AlReceipt",
+        "func": "var msg2 = {};\nif (msg.payload === true && flow.get('unreachAutoAck')) {\n  msg2.payload = `var dpAl = dom.GetObject(\"AL-${msg.channel}.${msg.datapoint}\");\n                dpAl.AlReceipt();`;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.deviceName = msg.deviceName;\n  return msg2;\n}\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1280,
+        "y": 760,
+        "wires": [
+            [
+                "fec5644b.ee045",
+                "d52e8a70.e0a338"
+            ]
+        ]
+    },
+    {
+        "id": "fec5644b.ee045",
+        "type": "ccu-script",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "script": "",
+        "ccuConfig": "38263145.35ea0e",
+        "topic": "${CCU}/${Interface}/",
+        "x": 1550,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c3977d32.cb5b8",
+        "type": "comment",
+        "z": "721e71e2.b201b8",
+        "name": "STICKY_UNREACH auto acknowledge and log",
+        "info": "",
+        "x": 1020,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "a0ba1733.3f27d",
+        "type": "ui_switch",
+        "z": "721e71e2.b201b8",
+        "name": "Auto ACK S_UNREACH",
+        "label": "Auto ACK",
+        "group": "40844f8.1cf98b",
+        "order": 4,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "autoAck",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 950,
+        "y": 840,
+        "wires": [
+            [
+                "b5a65dd1.bd84e"
+            ]
+        ]
+    },
+    {
+        "id": "b5a65dd1.bd84e",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "unreachAutoAck",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b07e8e9a.e48ea",
+        "type": "ui_text",
+        "z": "721e71e2.b201b8",
+        "group": "40844f8.1cf98b",
+        "order": 3,
+        "width": "6",
+        "height": "1",
+        "name": "STICKY_UNREACH",
+        "label": "<h3>STICKY_UNREACH</h3>",
+        "format": "",
+        "layout": "row-left",
+        "x": 940,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "d56511cf.ac0d1",
+        "type": "ui_template",
+        "z": "721e71e2.b201b8",
+        "group": "40844f8.1cf98b",
+        "name": "Log Auto Acknowledge",
+        "order": 5,
+        "width": "6",
+        "height": "6",
+        "format": "<h3>Auto Ack Log</h3>\n<table>\n  <tbody>\n    <tr>\n      <td><strong>TimeStamp</strong></td>\n      <td><strong>Device</strong></td>\n    </tr>\n    <tr ng-repeat=\"value in msg.payload\">\n      <td>{{value.ts}}</td>\n      <td>{{value.deviceName}}</td>\n    </tr>\n  </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 1740,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d52e8a70.e0a338",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "Rotate Log",
+        "func": "var dashboardLog = context.get('dashboardLog')|| [];\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n  // Delete oldest message if > 20\n  dashboardLog.shift();\n}\n\nif (msg.resetlog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1530,
+        "y": 800,
+        "wires": [
+            [
+                "d56511cf.ac0d1"
+            ]
+        ]
+    },
+    {
         "id": "6719ae8b.ab2f18",
         "type": "ui_group",
         "z": "",
         "name": "CPU Load",
         "tab": "189e0ea3.dd5dd1",
-        "order": 3,
+        "order": 4,
         "disp": true,
         "width": "6"
     },
@@ -1318,7 +1659,7 @@
         "z": "",
         "name": "Memory",
         "tab": "189e0ea3.dd5dd1",
-        "order": 4,
+        "order": 5,
         "disp": true,
         "width": "6"
     },
@@ -1370,7 +1711,7 @@
         "z": "",
         "name": "Disk",
         "tab": "189e0ea3.dd5dd1",
-        "order": 5,
+        "order": 6,
         "disp": true,
         "width": "8",
         "collapse": false
@@ -1381,6 +1722,17 @@
         "z": "",
         "name": "Duty Cycle",
         "tab": "8153eb0.fe96118",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "40844f8.1cf98b",
+        "type": "ui_group",
+        "z": "",
+        "name": "UNREACH",
+        "tab": "189e0ea3.dd5dd1",
+        "order": 3,
         "disp": true,
         "width": "6",
         "collapse": false
