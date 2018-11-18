@@ -46,7 +46,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 690,
+        "x": 710,
         "y": 180,
         "wires": []
     },
@@ -72,7 +72,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 690,
+        "x": 710,
         "y": 220,
         "wires": []
     },
@@ -98,7 +98,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 690,
+        "x": 710,
         "y": 260,
         "wires": []
     },
@@ -124,7 +124,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 680,
+        "x": 700,
         "y": 460,
         "wires": []
     },
@@ -172,7 +172,7 @@
         "label": "Total Memory",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 680,
+        "x": 700,
         "y": 500,
         "wires": []
     },
@@ -188,7 +188,7 @@
         "label": "Free Memory",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 690,
+        "x": 710,
         "y": 540,
         "wires": []
     },
@@ -200,7 +200,7 @@
         "func": "var seconds = msg.payload.uptime;\nvar msg2 = {};\n\nvar days = Math.floor(seconds / (3600 * 24));\nseconds -= days * 3600 * 24;\nvar hrs = Math.floor(seconds / 3600);\nseconds -= hrs * 3600;\nvar mnts = Math.floor(seconds / 60);\nseconds -= mnts * 60;\nmsg2.payload = days + 'd / ' + hrs +'h / ' + mnts + 'min / ' + seconds + 's';\n\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1240,
+        "x": 1322,
         "y": 180,
         "wires": [
             [
@@ -220,7 +220,7 @@
         "label": "Uptime",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1540,
+        "x": 1620,
         "y": 180,
         "wires": []
     },
@@ -236,7 +236,7 @@
         "label": "Hostname",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1530,
+        "x": 1610,
         "y": 220,
         "wires": []
     },
@@ -252,7 +252,7 @@
         "label": "Platform",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1540,
+        "x": 1620,
         "y": 260,
         "wires": []
     },
@@ -268,7 +268,7 @@
         "label": "Arch",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1550,
+        "x": 1630,
         "y": 300,
         "wires": []
     },
@@ -284,7 +284,7 @@
         "label": "Kernel",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1550,
+        "x": 1630,
         "y": 340,
         "wires": []
     },
@@ -300,7 +300,7 @@
         "label": "No. of Cores",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1530,
+        "x": 1610,
         "y": 400,
         "wires": []
     },
@@ -316,7 +316,7 @@
         "label": "CPU",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1550,
+        "x": 1630,
         "y": 440,
         "wires": []
     },
@@ -355,7 +355,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 660,
+        "x": 680,
         "y": 140,
         "wires": [
             [],
@@ -397,7 +397,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 670,
+        "x": 690,
         "y": 420,
         "wires": [
             [],
@@ -430,7 +430,7 @@
         "z": "721e71e2.b201b8",
         "name": "System Information",
         "info": "",
-        "x": 930,
+        "x": 1012,
         "y": 140,
         "wires": []
     },
@@ -439,7 +439,7 @@
         "type": "OS",
         "z": "721e71e2.b201b8",
         "name": "",
-        "x": 1010,
+        "x": 1092,
         "y": 300,
         "wires": [
             [
@@ -455,7 +455,7 @@
         "type": "Uptime",
         "z": "721e71e2.b201b8",
         "name": "",
-        "x": 1000,
+        "x": 1082,
         "y": 180,
         "wires": [
             [
@@ -468,7 +468,7 @@
         "type": "CPUs",
         "z": "721e71e2.b201b8",
         "name": "",
-        "x": 1010,
+        "x": 1092,
         "y": 420,
         "wires": [
             [
@@ -536,24 +536,6 @@
         ]
     },
     {
-        "id": "5ab12bc9.a0b8b4",
-        "type": "ccu-rpc",
-        "z": "721e71e2.b201b8",
-        "name": "",
-        "ccuConfig": "38263145.35ea0e",
-        "iface": "BidCos-RF",
-        "method": "rssiInfo",
-        "params": "",
-        "topic": "${CCU}/${Interface}/${Method}",
-        "x": 200,
-        "y": 640,
-        "wires": [
-            [
-                "43c7216a.58de68"
-            ]
-        ]
-    },
-    {
         "id": "43c7216a.58de68",
         "type": "function",
         "z": "721e71e2.b201b8",
@@ -589,7 +571,7 @@
         "method": "listBidcosInterfaces",
         "params": "[]",
         "topic": "${CCU}/${Interface}/${Method}",
-        "x": 990,
+        "x": 1072,
         "y": 640,
         "wires": [
             [
@@ -632,7 +614,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 1550,
+        "x": 1630,
         "y": 621,
         "wires": [
             [],
@@ -661,7 +643,7 @@
         ],
         "seg1": "30",
         "seg2": "70",
-        "x": 1550,
+        "x": 1630,
         "y": 661,
         "wires": []
     },
@@ -738,7 +720,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1260,
+        "x": 1342,
         "y": 220,
         "wires": [
             [
@@ -765,7 +747,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1260,
+        "x": 1342,
         "y": 260,
         "wires": [
             [
@@ -792,7 +774,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1260,
+        "x": 1342,
         "y": 300,
         "wires": [
             [
@@ -819,7 +801,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1260,
+        "x": 1342,
         "y": 340,
         "wires": [
             [
@@ -846,7 +828,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1260,
+        "x": 1342,
         "y": 400,
         "wires": [
             [
@@ -888,7 +870,7 @@
         "z": "721e71e2.b201b8",
         "name": "CCU Duty Cycle",
         "info": "",
-        "x": 920,
+        "x": 1002,
         "y": 600,
         "wires": []
     },
@@ -911,7 +893,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1260,
+        "x": 1342,
         "y": 640,
         "wires": [
             [
@@ -939,7 +921,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1260,
+        "x": 1342,
         "y": 440,
         "wires": [
             [
@@ -965,7 +947,7 @@
         "type": "Drives",
         "z": "721e71e2.b201b8",
         "name": "",
-        "x": 1030,
+        "x": 1112,
         "y": 540,
         "wires": [
             [
@@ -981,7 +963,7 @@
         "func": "'use strict';\nfunction formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nvar myArray = msg.payload;\nvar msg2 = {}, \n    msg3 = {};\n\n// Reformat values to human readable\nvar newArray = myArray.map(function(v) {\n  return {\n    filesystem: v.filesystem,\n    size: formatBytes(v.size * 1024),\n    used: formatBytes(v.used * 1024),\n    available: formatBytes(v.available * 1024),\n    usedPercent: (v.capacity * 100),\n    mount: v.mount\n  };\n});\nmsg2.payload = newArray;\n\n// Find '/usr/local'\nvar index = newArray.findIndex(x => x.mount ==='/usr/local');\nmsg3.payload = newArray[index].usedPercent;\n\nreturn [msg2, msg3];",
         "outputs": 2,
         "noerr": 0,
-        "x": 1250,
+        "x": 1332,
         "y": 540,
         "wires": [
             [
@@ -1005,7 +987,7 @@
         "storeOutMessages": true,
         "fwdInMessages": false,
         "templateScope": "local",
-        "x": 1540,
+        "x": 1620,
         "y": 520,
         "wires": [
             []
@@ -1033,7 +1015,7 @@
         ],
         "seg1": "75",
         "seg2": "90",
-        "x": 1500,
+        "x": 1580,
         "y": 560,
         "wires": []
     },
@@ -1049,7 +1031,7 @@
         "label": "IP",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 710,
+        "x": 730,
         "y": 340,
         "wires": []
     },
@@ -1096,7 +1078,7 @@
         "z": "721e71e2.b201b8",
         "name": "Disk Information",
         "info": "",
-        "x": 920,
+        "x": 1002,
         "y": 500,
         "wires": []
     },
@@ -1104,17 +1086,17 @@
         "id": "d2c19fd4.fa69f",
         "type": "link out",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "2905a362.32561c",
             "4c7acda3.e2b934",
-            "ad902d7f.3b30a",
-            "d9a7811a.8e557",
-            "865a64c1.dde128",
             "700d0c79.9b3ba4",
-            "d1b4ba2f.12b558",
+            "865a64c1.dde128",
             "aaaa5b37.2cd678",
-            "c312f300.5a6f1"
+            "ad902d7f.3b30a",
+            "c312f300.5a6f1",
+            "d1b4ba2f.12b558",
+            "d9a7811a.8e557"
         ],
         "x": 255,
         "y": 60,
@@ -1124,7 +1106,7 @@
         "id": "2905a362.32561c",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
@@ -1140,11 +1122,11 @@
         "id": "4c7acda3.e2b934",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
-        "x": 855,
+        "x": 937,
         "y": 180,
         "wires": [
             [
@@ -1156,11 +1138,11 @@
         "id": "ad902d7f.3b30a",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
-        "x": 855,
+        "x": 937,
         "y": 300,
         "wires": [
             [
@@ -1172,11 +1154,11 @@
         "id": "d9a7811a.8e557",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
-        "x": 855,
+        "x": 937,
         "y": 420,
         "wires": [
             [
@@ -1188,7 +1170,7 @@
         "id": "865a64c1.dde128",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
@@ -1204,7 +1186,7 @@
         "id": "700d0c79.9b3ba4",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
@@ -1220,11 +1202,11 @@
         "id": "d1b4ba2f.12b558",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
-        "x": 855,
+        "x": 937,
         "y": 540,
         "wires": [
             [
@@ -1236,7 +1218,7 @@
         "id": "aaaa5b37.2cd678",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
@@ -1244,7 +1226,7 @@
         "y": 640,
         "wires": [
             [
-                "5ab12bc9.a0b8b4"
+                "fae4a20b.43cab8"
             ]
         ]
     },
@@ -1252,11 +1234,11 @@
         "id": "c312f300.5a6f1",
         "type": "link in",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Inject30sec",
         "links": [
             "d2c19fd4.fa69f"
         ],
-        "x": 855,
+        "x": 937,
         "y": 640,
         "wires": [
             [
@@ -1277,7 +1259,7 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 690,
+        "x": 710,
         "y": 640,
         "wires": [
             []
@@ -1335,91 +1317,8 @@
         "y": 760,
         "wires": [
             [
-                "d58143d1.38e628"
-            ]
-        ]
-    },
-    {
-        "id": "d58143d1.38e628",
-        "type": "switch",
-        "z": "721e71e2.b201b8",
-        "name": "if true",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 270,
-        "y": 760,
-        "wires": [
-            [
-                "651b2639.ed8ce",
-                "e99167a0.ceaf58"
-            ]
-        ]
-    },
-    {
-        "id": "651b2639.ed8ce",
-        "type": "combine-list",
-        "z": "721e71e2.b201b8",
-        "name": "HTML Table",
-        "topic": "",
-        "payload": "ul",
-        "columns": [
-            "topic"
-        ],
-        "sort": "topic",
-        "order": "asc",
-        "defer": 250,
-        "timeout": 0,
-        "distinction": "topic",
-        "x": 430,
-        "y": 780,
-        "wires": [
-            [
-                "697032da.53fe74"
-            ]
-        ]
-    },
-    {
-        "id": "697032da.53fe74",
-        "type": "ui_template",
-        "z": "721e71e2.b201b8",
-        "group": "40844f8.1cf98b",
-        "name": "List UNREACH Devices:",
-        "order": 2,
-        "width": "6",
-        "height": "3",
-        "format": "<h3>UNREACH Devices</h3>\n<div ng-bind-html=\"msg.payload\"></div>",
-        "storeOutMessages": false,
-        "fwdInMessages": false,
-        "templateScope": "local",
-        "x": 650,
-        "y": 780,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e99167a0.ceaf58",
-        "type": "combine-statistic",
-        "z": "721e71e2.b201b8",
-        "name": "Count",
-        "topic": "",
-        "operator": "len",
-        "defer": 250,
-        "timeout": 0,
-        "distinction": "topic",
-        "x": 450,
-        "y": 740,
-        "wires": [
-            [
-                "91cfef89.1ffbe8"
+                "d97bb44b.9dc928",
+                "1e6c3c3f.56ab14"
             ]
         ]
     },
@@ -1427,43 +1326,17 @@
         "id": "34d182a2.cd93ee",
         "type": "comment",
         "z": "721e71e2.b201b8",
-        "name": "CCU UNREACH",
+        "name": "CCU (STICKY) UNREACH ",
         "info": "",
-        "x": 120,
+        "x": 150,
         "y": 720,
-        "wires": []
-    },
-    {
-        "id": "91cfef89.1ffbe8",
-        "type": "ui_gauge",
-        "z": "721e71e2.b201b8",
-        "name": "Gauge",
-        "group": "40844f8.1cf98b",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Count UNREACH",
-        "label": "",
-        "format": "{{value}}",
-        "min": 0,
-        "max": "100",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "1",
-        "x": 710,
-        "y": 740,
         "wires": []
     },
     {
         "id": "c36f11c1.a56ea",
         "type": "ccu-rpc-event",
         "z": "721e71e2.b201b8",
-        "name": "RPC event STICKY_UNREACH",
+        "name": "STICKY_UNREACH",
         "iface": "BidCos-RF",
         "ccuConfig": "38263145.35ea0e",
         "rooms": "",
@@ -1488,8 +1361,8 @@
         "working": false,
         "cache": true,
         "topic": "${CCU}/${Interface}/${channelName}/${datapoint}",
-        "x": 970,
-        "y": 760,
+        "x": 130,
+        "y": 840,
         "wires": [
             [
                 "1e6c3c3f.56ab14"
@@ -1500,16 +1373,16 @@
         "id": "1e6c3c3f.56ab14",
         "type": "function",
         "z": "721e71e2.b201b8",
-        "name": "AlReceipt",
-        "func": "var msg2 = {};\nif (msg.payload === true && flow.get('unreachAutoAck')) {\n  msg2.payload = `var dpAl = dom.GetObject(\"AL-${msg.channel}.${msg.datapoint}\");\n                dpAl.AlReceipt();`;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.deviceName = msg.deviceName;\n  return msg2;\n}\n\n\n\n\n",
+        "name": "Log and Auto Ack",
+        "func": "var msg2 = {};\nif (msg.payload === true && \n    msg.datapoint === 'STICKY_UNREACH' && \n    flow.get('unreachAutoAck')) {\n  msg2.payload = `var dpAl = dom.GetObject(\"AL-${msg.channel}.${msg.datapoint}\");\n                dpAl.AlReceipt();`;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'ST_UR ack: ' + msg.deviceName;\n  return msg2;\n} else if (msg.payload === true && \n           msg.datapoint === 'STICKY_UNREACH' &&\n           !flow.get('unreachAutoAck')) {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = msg.deviceName + ' is ST_UR';\n  return msg2;\n} else if (msg.payload === true && msg.datapoint === 'UNREACH') {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'UR: ' + msg.deviceName;\n  return msg2;\n} else if (msg.payload === false && msg.datapoint === 'UNREACH') {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'REACH: ' + msg.deviceName;\n  return msg2;\n}\n\n\n\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1280,
-        "y": 760,
+        "x": 370,
+        "y": 840,
         "wires": [
             [
-                "fec5644b.ee045",
-                "d52e8a70.e0a338"
+                "d52e8a70.e0a338",
+                "c9bd1cf8.6ed038"
             ]
         ]
     },
@@ -1517,34 +1390,24 @@
         "id": "fec5644b.ee045",
         "type": "ccu-script",
         "z": "721e71e2.b201b8",
-        "name": "",
+        "name": "Execute AlReceipt",
         "script": "",
         "ccuConfig": "38263145.35ea0e",
         "topic": "${CCU}/${Interface}/",
-        "x": 1550,
-        "y": 740,
+        "x": 770,
+        "y": 880,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "c3977d32.cb5b8",
-        "type": "comment",
-        "z": "721e71e2.b201b8",
-        "name": "STICKY_UNREACH auto acknowledge and log",
-        "info": "",
-        "x": 1020,
-        "y": 720,
-        "wires": []
     },
     {
         "id": "a0ba1733.3f27d",
         "type": "ui_switch",
         "z": "721e71e2.b201b8",
         "name": "Auto ACK S_UNREACH",
-        "label": "Auto ACK",
+        "label": "Auto Acknowledge STICKY_UNREACH",
         "group": "40844f8.1cf98b",
-        "order": 4,
+        "order": 1,
         "width": "6",
         "height": "1",
         "passthru": true,
@@ -1559,8 +1422,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 950,
-        "y": 840,
+        "x": 150,
+        "y": 920,
         "wires": [
             [
                 "b5a65dd1.bd84e"
@@ -1586,43 +1449,27 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1230,
-        "y": 840,
+        "x": 530,
+        "y": 920,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "b07e8e9a.e48ea",
-        "type": "ui_text",
-        "z": "721e71e2.b201b8",
-        "group": "40844f8.1cf98b",
-        "order": 3,
-        "width": "6",
-        "height": "1",
-        "name": "STICKY_UNREACH",
-        "label": "<h3>STICKY_UNREACH</h3>",
-        "format": "",
-        "layout": "row-left",
-        "x": 940,
-        "y": 800,
-        "wires": []
     },
     {
         "id": "d56511cf.ac0d1",
         "type": "ui_template",
         "z": "721e71e2.b201b8",
         "group": "40844f8.1cf98b",
-        "name": "Log Auto Acknowledge",
-        "order": 5,
+        "name": "Log all UNREACH",
+        "order": 4,
         "width": "6",
         "height": "6",
-        "format": "<h3>Auto Ack Log</h3>\n<table>\n  <tbody>\n    <tr>\n      <td><strong>TimeStamp</strong></td>\n      <td><strong>Device</strong></td>\n    </tr>\n    <tr ng-repeat=\"value in msg.payload\">\n      <td>{{value.ts}}</td>\n      <td>{{value.deviceName}}</td>\n    </tr>\n  </tbody>\n</table>",
+        "format": "<h3>(STICKY) UNREACH Event Log</h3>\n<table>\n  <tbody>\n    <tr>\n      <td><strong>Time Stamp</strong></td>\n      <td><strong>Device</strong></td>\n    </tr>\n    <tr ng-repeat=\"value in msg.payload\">\n      <td>{{value.ts}}</td>\n      <td>{{value.logMsg}}</td>\n    </tr>\n  </tbody>\n</table>",
         "storeOutMessages": true,
         "fwdInMessages": false,
         "templateScope": "local",
-        "x": 1740,
-        "y": 800,
+        "x": 770,
+        "y": 840,
         "wires": [
             []
         ]
@@ -1632,14 +1479,563 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Rotate Log",
-        "func": "var dashboardLog = context.get('dashboardLog')|| [];\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n  // Delete oldest message if > 20\n  dashboardLog.shift();\n}\n\nif (msg.resetlog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
+        "func": "var dashboardLog = context.get('dashboardLog')|| [];\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n  // Delete oldest message if > 20\n  dashboardLog.shift();\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1530,
-        "y": 800,
+        "x": 570,
+        "y": 840,
         "wires": [
             [
                 "d56511cf.ac0d1"
+            ]
+        ]
+    },
+    {
+        "id": "d97bb44b.9dc928",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "Log Currently UNREACH",
+        "func": "var msg2 = {},\n    unreachCount = context.get('unreachCount') || 0;\n    \nif (msg.payload === true) {\n  unreachCount += 1;\n  context.set('unreachCount', unreachCount);\n  msg2.topic = msg.topic;\n  msg2.addLog = true;\n  msg2.payload = unreachCount;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.deviceName = msg.deviceName;\n  return msg2;\n} else if (msg.payload === false) {\n  unreachCount -= 1;\n  context.set('unreachCount', unreachCount);\n  msg2.payload = unreachCount;\n  msg2.topic = msg.topic;\n  msg2.delLog = true;\n  return msg2;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 760,
+        "wires": [
+            [
+                "a74849f2.c5f9c8"
+            ]
+        ]
+    },
+    {
+        "id": "a74849f2.c5f9c8",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "Rotate Log",
+        "func": "'use strict';\n// Set the maximum length of the log\nconst logMaxLength = 20;\n\n// To dynamically add and remove entries\n// an identifier to distinguish the entries\n// needs to be set. Typically 'topic' is used\nconst logIdentifier = 'topic';\n\n\nvar dashboardLog = context.get('dashboardLog')|| [];\n\nif (!msg.delLog) {\n  dashboardLog.push(msg);\n  if (dashboardLog.length > logMaxLength) {\n  // Delete oldest message if > 20\n    dashboardLog.shift();\n  }\n} else if (msg.delLog) {\n//  if (dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier])) {\n    dashboardLog.splice(dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier]), 1);\n//  }\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 760,
+        "wires": [
+            [
+                "b3f94a49.8789d"
+            ]
+        ]
+    },
+    {
+        "id": "b3f94a49.8789d",
+        "type": "ui_template",
+        "z": "721e71e2.b201b8",
+        "group": "40844f8.1cf98b",
+        "name": "Log UR Devices",
+        "order": 3,
+        "width": "6",
+        "height": "6",
+        "format": "<h3>Currently UNREACH Devices</h3>\n<table>\n  <tbody>\n    <tr>\n      <td><strong>Time Stamp</strong></td>\n      <td><strong>Device</strong></td>\n    </tr>\n    <tr ng-repeat=\"value in msg.payload\">\n      <td>{{value.ts}}</td>\n      <td>{{value.deviceName}}</td>\n    </tr>\n  </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 780,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c9bd1cf8.6ed038",
+        "type": "switch",
+        "z": "721e71e2.b201b8",
+        "name": "not null",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 580,
+        "y": 880,
+        "wires": [
+            [
+                "fec5644b.ee045"
+            ]
+        ]
+    },
+    {
+        "id": "1ee6074e.956ce1",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "resetLog",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 960,
+        "wires": [
+            [
+                "6a2f8fc5.791508"
+            ]
+        ]
+    },
+    {
+        "id": "238b52bf.b6169e",
+        "type": "ui_button",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "group": "40844f8.1cf98b",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset Logs",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 110,
+        "y": 960,
+        "wires": [
+            [
+                "1ee6074e.956ce1"
+            ]
+        ]
+    },
+    {
+        "id": "693adfa4.9b4a78",
+        "type": "link in",
+        "z": "721e71e2.b201b8",
+        "name": "logReset",
+        "links": [
+            "6a2f8fc5.791508"
+        ],
+        "x": 435,
+        "y": 800,
+        "wires": [
+            [
+                "a74849f2.c5f9c8",
+                "d52e8a70.e0a338"
+            ]
+        ]
+    },
+    {
+        "id": "6a2f8fc5.791508",
+        "type": "link out",
+        "z": "721e71e2.b201b8",
+        "name": "logReset",
+        "links": [
+            "693adfa4.9b4a78"
+        ],
+        "x": 700,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "a20ff5fa.856ce8",
+        "type": "tail",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "filetype": "text",
+        "split": true,
+        "filename": "/var/log/messages",
+        "x": 1010,
+        "y": 800,
+        "wires": [
+            [
+                "3b77e1a4.fd8716"
+            ]
+        ]
+    },
+    {
+        "id": "3b77e1a4.fd8716",
+        "type": "switch",
+        "z": "721e71e2.b201b8",
+        "name": "Filter Errors",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^.*Error\\:.*$",
+                "vt": "str",
+                "case": true
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1210,
+        "y": 800,
+        "wires": [
+            [
+                "93870c97.d4095"
+            ]
+        ]
+    },
+    {
+        "id": "93870c97.d4095",
+        "type": "counter",
+        "z": "721e71e2.b201b8",
+        "name": "Count Errors",
+        "init": "0",
+        "step": "1",
+        "lower": "",
+        "upper": "",
+        "mode": "increment",
+        "outputs": 2,
+        "x": 1390,
+        "y": 800,
+        "wires": [
+            [
+                "2c79e224.516d7e"
+            ],
+            [
+                "e570c8c5.d2137",
+                "73aa8f33.1ffab"
+            ]
+        ]
+    },
+    {
+        "id": "2c79e224.516d7e",
+        "type": "ui_gauge",
+        "z": "721e71e2.b201b8",
+        "name": "Show Error Count",
+        "group": "109dc147.190c8f",
+        "order": 11,
+        "width": "6",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Error Count",
+        "label": "Fehler",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1590,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "e570c8c5.d2137",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "Rotate Entries",
+        "func": "var dashboardLog = context.get('dashboardLog')|| [];\nvar msg2 = {};\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n    // Delete oldest message if > 20\n    dashboardLog.shift();\n    //dashboardLog.length = 20;\n} \n\nif (msg.resetlog) {\n    dashboardLog = [];\n}\n \n// store the value back\ncontext.set('dashboardLog',dashboardLog);\n \n// make it part of the outgoing msg object\nmsg2.payload = dashboardLog.reverse();\nreturn msg2;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 860,
+        "wires": [
+            [
+                "30ea94e7.a134dc"
+            ]
+        ]
+    },
+    {
+        "id": "aaca1586.e7f59",
+        "type": "join",
+        "z": "721e71e2.b201b8",
+        "name": "Prepare Message",
+        "mode": "custom",
+        "build": "string",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\r\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "5",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1750,
+        "y": 820,
+        "wires": [
+            [
+                "3d15ebf0.f953f4"
+            ]
+        ]
+    },
+    {
+        "id": "3d15ebf0.f953f4",
+        "type": "e-mail",
+        "z": "721e71e2.b201b8",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": false,
+        "name": "",
+        "dname": "Send Email",
+        "x": 1930,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "28946e0.d7af792",
+        "type": "comment",
+        "z": "721e71e2.b201b8",
+        "name": "Monitor var/log/messages",
+        "info": "",
+        "x": 1030,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "bcc65720.30194",
+        "type": "ui_button",
+        "z": "721e71e2.b201b8",
+        "name": "Reset Error Count",
+        "group": "109dc147.190c8f",
+        "order": 12,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Reset",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 1010,
+        "y": 760,
+        "wires": [
+            [
+                "4a243311.c4dd1c"
+            ]
+        ]
+    },
+    {
+        "id": "4a243311.c4dd1c",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "Set Reset Message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Reset Error Count",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 760,
+        "wires": [
+            [
+                "93870c97.d4095"
+            ]
+        ]
+    },
+    {
+        "id": "fb28037c.3bbd3",
+        "type": "ui_button",
+        "z": "721e71e2.b201b8",
+        "name": "Clear DashLog",
+        "group": "109dc147.190c8f",
+        "order": 14,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Clear Error Log",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 1000,
+        "y": 860,
+        "wires": [
+            [
+                "37fa680c.330b8"
+            ]
+        ]
+    },
+    {
+        "id": "37fa680c.330b8",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "Set Reset Message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "resetlog",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 860,
+        "wires": [
+            [
+                "e570c8c5.d2137"
+            ]
+        ]
+    },
+    {
+        "id": "e466140e.07ec08",
+        "type": "ui_switch",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "label": "Send Email With Logged Errors",
+        "group": "109dc147.190c8f",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 1050,
+        "y": 900,
+        "wires": [
+            [
+                "59d96c62.3e9824"
+            ]
+        ]
+    },
+    {
+        "id": "59d96c62.3e9824",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "errorEmail",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1310,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "73aa8f33.1ffab",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "Send Email?",
+        "func": "if (flow.get('errorEmail')) {\n  return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1570,
+        "y": 820,
+        "wires": [
+            [
+                "aaca1586.e7f59"
+            ]
+        ]
+    },
+    {
+        "id": "33ade3c2.c8918c",
+        "type": "ui_text",
+        "z": "721e71e2.b201b8",
+        "group": "109dc147.190c8f",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "name": "Monitor /var/log/messages",
+        "label": "<h3>Monitor /var/log/messages</h3>",
+        "format": "",
+        "layout": "row-left",
+        "x": 1040,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "30ea94e7.a134dc",
+        "type": "ui_template",
+        "z": "721e71e2.b201b8",
+        "group": "109dc147.190c8f",
+        "name": "Recent Errors",
+        "order": 13,
+        "width": "6",
+        "height": "4",
+        "format": "<ul>\n <li ng-repeat=\"x in msg.payload\">\n <font color=\"red\">{{x.topic}}</font>\n    <ul>\n        <li>{{x.payload}}</li>\n    </ul>\n </li>\n</ul>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 1760,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fae4a20b.43cab8",
+        "type": "ccu-rpc",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "ccuConfig": "38263145.35ea0e",
+        "iface": "BidCos-RF",
+        "method": "rssiInfo",
+        "params": "[]",
+        "topic": "${CCU}/${Interface}/${Method}",
+        "x": 200,
+        "y": 640,
+        "wires": [
+            [
+                "43c7216a.58de68"
             ]
         ]
     },
@@ -1692,7 +2088,7 @@
         "rpcServerHost": "127.0.0.1",
         "rpcBinPort": "2047",
         "rpcXmlPort": "2048",
-        "contextStore": "memory"
+        "contextStore": "default"
     },
     {
         "id": "4bbfb1c3.d86a",
