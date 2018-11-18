@@ -536,24 +536,6 @@
         ]
     },
     {
-        "id": "5ab12bc9.a0b8b4",
-        "type": "ccu-rpc",
-        "z": "721e71e2.b201b8",
-        "name": "",
-        "ccuConfig": "38263145.35ea0e",
-        "iface": "BidCos-RF",
-        "method": "rssiInfo",
-        "params": "",
-        "topic": "${CCU}/${Interface}/${Method}",
-        "x": 200,
-        "y": 640,
-        "wires": [
-            [
-                "43c7216a.58de68"
-            ]
-        ]
-    },
-    {
         "id": "43c7216a.58de68",
         "type": "function",
         "z": "721e71e2.b201b8",
@@ -1244,7 +1226,7 @@
         "y": 640,
         "wires": [
             [
-                "5ab12bc9.a0b8b4"
+                "fae4a20b.43cab8"
             ]
         ]
     },
@@ -1529,7 +1511,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Rotate Log",
-        "func": "'use strict';\n// Set the maximum length of the log\nconst logMaxLength = 20;\n\n// To dynamically add and remove entries\n// an identifier to distinguish the entries\n// needs to be set. Typically 'topic' is used\nconst logIdentifier = 'topic';\n\n\nvar dashboardLog = context.get('dashboardLog')|| [];\n\nif (!msg.delLog && msg.addLog) {\n  dashboardLog.push(msg);\n  if (dashboardLog.length > logMaxLength) {\n  // Delete oldest message if > 20\n    dashboardLog.shift();\n  }\n} else if (msg.delLog) {\n//  if (dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier])) {\n    dashboardLog.splice(dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier]), 1);\n//  }\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
+        "func": "'use strict';\n// Set the maximum length of the log\nconst logMaxLength = 20;\n\n// To dynamically add and remove entries\n// an identifier to distinguish the entries\n// needs to be set. Typically 'topic' is used\nconst logIdentifier = 'topic';\n\n\nvar dashboardLog = context.get('dashboardLog')|| [];\n\nif (!msg.delLog) {\n  dashboardLog.push(msg);\n  if (dashboardLog.length > logMaxLength) {\n  // Delete oldest message if > 20\n    dashboardLog.shift();\n  }\n} else if (msg.delLog) {\n//  if (dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier])) {\n    dashboardLog.splice(dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier]), 1);\n//  }\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 570,
@@ -1664,6 +1646,400 @@
         "wires": []
     },
     {
+        "id": "a20ff5fa.856ce8",
+        "type": "tail",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "filetype": "text",
+        "split": true,
+        "filename": "/var/log/messages",
+        "x": 1010,
+        "y": 800,
+        "wires": [
+            [
+                "3b77e1a4.fd8716"
+            ]
+        ]
+    },
+    {
+        "id": "3b77e1a4.fd8716",
+        "type": "switch",
+        "z": "721e71e2.b201b8",
+        "name": "Filter Errors",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^.*Error\\:.*$",
+                "vt": "str",
+                "case": true
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1210,
+        "y": 800,
+        "wires": [
+            [
+                "93870c97.d4095"
+            ]
+        ]
+    },
+    {
+        "id": "93870c97.d4095",
+        "type": "counter",
+        "z": "721e71e2.b201b8",
+        "name": "Count Errors",
+        "init": "0",
+        "step": "1",
+        "lower": "",
+        "upper": "",
+        "mode": "increment",
+        "outputs": 2,
+        "x": 1390,
+        "y": 800,
+        "wires": [
+            [
+                "2c79e224.516d7e"
+            ],
+            [
+                "e570c8c5.d2137",
+                "73aa8f33.1ffab"
+            ]
+        ]
+    },
+    {
+        "id": "2c79e224.516d7e",
+        "type": "ui_gauge",
+        "z": "721e71e2.b201b8",
+        "name": "Show Error Count",
+        "group": "109dc147.190c8f",
+        "order": 11,
+        "width": "6",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Error Count",
+        "label": "Fehler",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1590,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "e570c8c5.d2137",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "Rotate Entries",
+        "func": "var dashboardLog = context.get('dashboardLog')|| [];\nvar msg2 = {};\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n    // Delete oldest message if > 20\n    dashboardLog.shift();\n    //dashboardLog.length = 20;\n} \n\nif (msg.resetlog) {\n    dashboardLog = [];\n}\n \n// store the value back\ncontext.set('dashboardLog',dashboardLog);\n \n// make it part of the outgoing msg object\nmsg2.payload = dashboardLog.reverse();\nreturn msg2;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 860,
+        "wires": [
+            [
+                "30ea94e7.a134dc"
+            ]
+        ]
+    },
+    {
+        "id": "aaca1586.e7f59",
+        "type": "join",
+        "z": "721e71e2.b201b8",
+        "name": "Prepare Message",
+        "mode": "custom",
+        "build": "string",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\r\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "5",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1750,
+        "y": 820,
+        "wires": [
+            [
+                "3d15ebf0.f953f4"
+            ]
+        ]
+    },
+    {
+        "id": "3d15ebf0.f953f4",
+        "type": "e-mail",
+        "z": "721e71e2.b201b8",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": false,
+        "name": "",
+        "dname": "Send Email",
+        "x": 1930,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "28946e0.d7af792",
+        "type": "comment",
+        "z": "721e71e2.b201b8",
+        "name": "Monitor var/log/messages",
+        "info": "",
+        "x": 1030,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "bcc65720.30194",
+        "type": "ui_button",
+        "z": "721e71e2.b201b8",
+        "name": "Reset Error Count",
+        "group": "109dc147.190c8f",
+        "order": 12,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Reset",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 1010,
+        "y": 760,
+        "wires": [
+            [
+                "4a243311.c4dd1c"
+            ]
+        ]
+    },
+    {
+        "id": "4a243311.c4dd1c",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "Set Reset Message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Reset Error Count",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 760,
+        "wires": [
+            [
+                "93870c97.d4095"
+            ]
+        ]
+    },
+    {
+        "id": "fb28037c.3bbd3",
+        "type": "ui_button",
+        "z": "721e71e2.b201b8",
+        "name": "Clear DashLog",
+        "group": "109dc147.190c8f",
+        "order": 14,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Clear Error Log",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 1000,
+        "y": 860,
+        "wires": [
+            [
+                "37fa680c.330b8"
+            ]
+        ]
+    },
+    {
+        "id": "37fa680c.330b8",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "Set Reset Message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "resetlog",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 860,
+        "wires": [
+            [
+                "e570c8c5.d2137"
+            ]
+        ]
+    },
+    {
+        "id": "e466140e.07ec08",
+        "type": "ui_switch",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "label": "Send Email With Logged Errors",
+        "group": "109dc147.190c8f",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 1050,
+        "y": 900,
+        "wires": [
+            [
+                "59d96c62.3e9824"
+            ]
+        ]
+    },
+    {
+        "id": "59d96c62.3e9824",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "errorEmail",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1310,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "73aa8f33.1ffab",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "Send Email?",
+        "func": "if (flow.get('errorEmail')) {\n  return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1570,
+        "y": 820,
+        "wires": [
+            [
+                "aaca1586.e7f59"
+            ]
+        ]
+    },
+    {
+        "id": "33ade3c2.c8918c",
+        "type": "ui_text",
+        "z": "721e71e2.b201b8",
+        "group": "109dc147.190c8f",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "name": "Monitor /var/log/messages",
+        "label": "<h3>Monitor /var/log/messages</h3>",
+        "format": "",
+        "layout": "row-left",
+        "x": 1040,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "30ea94e7.a134dc",
+        "type": "ui_template",
+        "z": "721e71e2.b201b8",
+        "group": "109dc147.190c8f",
+        "name": "Recent Errors",
+        "order": 13,
+        "width": "6",
+        "height": "4",
+        "format": "<ul>\n <li ng-repeat=\"x in msg.payload\">\n <font color=\"red\">{{x.topic}}</font>\n    <ul>\n        <li>{{x.payload}}</li>\n    </ul>\n </li>\n</ul>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 1760,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fae4a20b.43cab8",
+        "type": "ccu-rpc",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "ccuConfig": "38263145.35ea0e",
+        "iface": "BidCos-RF",
+        "method": "rssiInfo",
+        "params": "[]",
+        "topic": "${CCU}/${Interface}/${Method}",
+        "x": 200,
+        "y": 640,
+        "wires": [
+            [
+                "43c7216a.58de68"
+            ]
+        ]
+    },
+    {
         "id": "6719ae8b.ab2f18",
         "type": "ui_group",
         "z": "",
@@ -1712,7 +2088,7 @@
         "rpcServerHost": "127.0.0.1",
         "rpcBinPort": "2047",
         "rpcXmlPort": "2048",
-        "contextStore": "memory"
+        "contextStore": "default"
     },
     {
         "id": "4bbfb1c3.d86a",

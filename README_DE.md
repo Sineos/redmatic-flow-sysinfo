@@ -8,6 +8,9 @@ Dieser Node Red Flow ist speziell für [RedMatic](https://github.com/hobbyquaker
  - Festplattenspeicher
  - CCU Duty Cycle
  - CCU RSSI
+ - UNREACH Devices
+ - Automatische Bestätigung von STICKY_UNREACH
+ - Überwachung von /var/log/messages und Anzeige der letzen 20 Fehlermeldungen
 
 ## Zusätzliche Nodes
 Für die Systeminformationen wird zusätzlich die [Node OS](https://flows.nodered.org/node/node-red-contrib-os) benötigt.
