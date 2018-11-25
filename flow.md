@@ -540,7 +540,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Extract RSSI values",
-        "func": "'use strict';\nvar rssi = msg.payload;\nvar myRSSIObj = {},\n    myDBValues = [],\n    ccu = '',\n    msg2 = {};\n\n//ccu = Object.keys(rssi)[Object.keys(rssi).length-1];\nccu = Object.keys(rssi).find(function(key) {\n  return key.endsWith('0');\n});\n\nfor (var key of Object.keys(rssi)) {\n  if (key !== ccu) {\n    myDBValues.push(rssi[key][ccu][1]);\n    if (rssi[key][ccu][0] < 0) {\n       myDBValues.push(rssi[key][ccu][0]); \n    } else if (rssi[key][ccu][0] > 0) {\n        myDBValues.push('n/a');\n    }\n    myRSSIObj[key] = myDBValues;\n    myDBValues = [];\n  }\n}\n\nmsg2 = {\n  payload: myRSSIObj,\n  topic: msg.topic,\n  ccu: ccu\n};\n\nreturn msg2;\n",
+        "func": "'use strict';\nvar rssi = msg.payload;\nvar myRSSIObj = {},\n    myDBValues = [],\n    ccu = '',\n    msg2 = {};\n\n// List all keys and catch the last one, \n// which is the CCU\nccu = Object.keys(rssi)[Object.keys(rssi).length-1];\n\n\nfor (var key of Object.keys(rssi)) {\n  if (key !== ccu) {\n    myDBValues.push(rssi[key][ccu][1]);\n    if (rssi[key][ccu][0] < 0) {\n       myDBValues.push(rssi[key][ccu][0]); \n    } else if (rssi[key][ccu][0] > 0) {\n        myDBValues.push('n/a');\n    }\n    myRSSIObj[key] = myDBValues;\n    myDBValues = [];\n  }\n}\n\nmsg2 = {\n  payload: myRSSIObj,\n  topic: msg.topic,\n  ccu: ccu\n};\n\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 420,
