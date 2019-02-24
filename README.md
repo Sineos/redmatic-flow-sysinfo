@@ -14,6 +14,7 @@ A Node Red flow especially for [RedMatic](https://github.com/hobbyquaker/RedMati
 ## Additional Nodes
 
 For the system information the [Node OS](https://flows.nodered.org/node/node-red-contrib-os) is used.
+Additionally the Node-RED [counter node](https://flows.nodered.org/node/node-red-contrib-counter) is required.
 
 ## Flow
 
