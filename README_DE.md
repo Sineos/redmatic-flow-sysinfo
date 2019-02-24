@@ -14,6 +14,7 @@ Dieser Node Red Flow ist speziell für [RedMatic](https://github.com/hobbyquaker
 
 ## Zusätzliche Nodes
 Für die Systeminformationen wird zusätzlich die [Node OS](https://flows.nodered.org/node/node-red-contrib-os) benötigt.
+Weiterhin wird der Node-Red [counter node](https://flows.nodered.org/node/node-red-contrib-counter) benötigt.
 
 ## Flow
 
