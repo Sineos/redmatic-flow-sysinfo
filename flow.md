@@ -133,7 +133,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Bytes to KB / MB / GB ...",
-        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1000,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.totalmem);\nreturn msg;",
+        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  const k = 1000,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.totalmem);\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -149,7 +149,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Bytes to KB / MB / GB ...",
-        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1000,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.freemem);\nreturn msg;",
+        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  const k = 1000,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.freemem);\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -197,7 +197,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Seconds to d/h/min/s",
-        "func": "var seconds = msg.payload.uptime;\nvar msg2 = {};\n\nvar days = Math.floor(seconds / (3600 * 24));\nseconds -= days * 3600 * 24;\nvar hrs = Math.floor(seconds / 3600);\nseconds -= hrs * 3600;\nvar mnts = Math.floor(seconds / 60);\nseconds -= mnts * 60;\nmsg2.payload = days + 'd / ' + hrs +'h / ' + mnts + 'min / ' + seconds + 's';\n\nreturn msg2;\n",
+        "func": "let seconds = msg.payload.uptime;\nconst msg2 = {};\n\nconst days = Math.floor(seconds / (3600 * 24));\nseconds -= days * 3600 * 24;\nconst hrs = Math.floor(seconds / 3600);\nseconds -= hrs * 3600;\nconst mnts = Math.floor(seconds / 60);\nseconds -= mnts * 60;\nmsg2.payload = days + 'd / ' + hrs +'h / ' + mnts + 'min / ' + seconds + 's';\n\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 1322,
@@ -355,6 +355,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 680,
         "y": 140,
         "wires": [
@@ -397,6 +398,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 690,
         "y": 420,
         "wires": [
@@ -540,7 +542,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Extract RSSI values",
-        "func": "'use strict';\nvar rssi = msg.payload;\nvar myRSSIObj = {},\n    myDBValues = [],\n    ccu = '',\n    msg2 = {};\n\n// List all keys and catch the last one, \n// which is the CCU\nccu = Object.keys(rssi)[Object.keys(rssi).length-1];\n\n\nfor (var key of Object.keys(rssi)) {\n  if (key !== ccu) {\n    myDBValues.push(rssi[key][ccu][1]);\n    if (rssi[key][ccu][0] < 0) {\n       myDBValues.push(rssi[key][ccu][0]); \n    } else if (rssi[key][ccu][0] > 0) {\n        myDBValues.push('n/a');\n    }\n    myRSSIObj[key] = myDBValues;\n    myDBValues = [];\n  }\n}\n\nmsg2 = {\n  payload: myRSSIObj,\n  topic: msg.topic,\n  ccu: ccu\n};\n\nreturn msg2;\n",
+        "func": "'use strict';\nconst rssi = msg.payload,\n      myRSSIObj = {};\n\nlet ccu = '',\n    myDBValues = [],\n    msg2 = {};\n\nfor (const key of Object.keys(rssi)) {\n  if (Object.keys(rssi[key]).length === 1) {\n    ccu = Object.keys(rssi[key])[0];\n    myDBValues.push(rssi[key][ccu][1]);\n    if (rssi[key][ccu][0] < 0) {\n      myDBValues.push(rssi[key][ccu][0]);\n    } else if (rssi[key][ccu][0] > 0) {\n      myDBValues.push('n/a');\n    }\n    myRSSIObj[key] = myDBValues;\n    myDBValues = [];\n  }\n}\n\nmsg2 = {\n  payload: myRSSIObj,\n  topic: msg.topic,\n  ccu: ccu\n};\n\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 420,
@@ -614,6 +616,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 1630,
         "y": 621,
         "wires": [
@@ -960,7 +963,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Reformat payload",
-        "func": "'use strict';\nfunction formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  var k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nvar myArray = msg.payload;\nvar msg2 = {}, \n    msg3 = {};\n\n// Reformat values to human readable\nvar newArray = myArray.map(function(v) {\n  return {\n    filesystem: v.filesystem,\n    size: formatBytes(v.size * 1024),\n    used: formatBytes(v.used * 1024),\n    available: formatBytes(v.available * 1024),\n    usedPercent: (v.capacity * 100),\n    mount: v.mount\n  };\n});\nmsg2.payload = newArray;\n\n// Find '/usr/local'\nvar index = newArray.findIndex(x => x.mount ==='/usr/local');\nmsg3.payload = newArray[index].usedPercent;\n\nreturn [msg2, msg3];",
+        "func": "'use strict';\nfunction formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  const k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nconst myArray = msg.payload;\nconst msg2 = {},\n    msg3 = {};\n\n// Reformat values to human readable\nconst newArray = myArray.map(function(v) {\n  return {\n    filesystem: v.filesystem,\n    size: formatBytes(v.size * 1024),\n    used: formatBytes(v.used * 1024),\n    available: formatBytes(v.available * 1024),\n    usedPercent: (v.capacity * 100).toFixed(0),\n    mount: v.mount\n  };\n});\nmsg2.payload = newArray;\n\n// Find '/usr/local'\nconst index = newArray.findIndex((x) => x.mount ==='/usr/local');\nmsg3.payload = newArray[index].usedPercent;\n\nreturn [msg2, msg3];\n",
         "outputs": 2,
         "noerr": 0,
         "x": 1332,
@@ -1374,7 +1377,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Log and Auto Ack",
-        "func": "var msg2 = {};\nif (msg.payload === true && \n    msg.datapoint === 'STICKY_UNREACH' && \n    flow.get('unreachAutoAck')) {\n  msg2.payload = `var dpAl = dom.GetObject(\"AL-${msg.channel}.${msg.datapoint}\");\n                dpAl.AlReceipt();`;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'ST_UR ack: ' + msg.deviceName;\n  return msg2;\n} else if (msg.payload === true && \n           msg.datapoint === 'STICKY_UNREACH' &&\n           !flow.get('unreachAutoAck')) {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = msg.deviceName + ' is ST_UR';\n  return msg2;\n} else if (msg.payload === true && msg.datapoint === 'UNREACH') {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'UR: ' + msg.deviceName;\n  return msg2;\n} else if (msg.payload === false && msg.datapoint === 'UNREACH') {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'REACH: ' + msg.deviceName;\n  return msg2;\n}\n\n\n\n",
+        "func": "const msg2 = {};\nif (msg.payload === true &&\n    msg.datapoint === 'STICKY_UNREACH' &&\n    flow.get('unreachAutoAck', 'fileContext')) {\n  msg2.payload = `var dpAl = dom.GetObject(\"AL-${msg.channel}.${msg.datapoint}\");\n                dpAl.AlReceipt();`;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'ST_UR ack: ' + msg.deviceName;\n  return msg2;\n} else if (msg.payload === true &&\n           msg.datapoint === 'STICKY_UNREACH' &&\n           !flow.get('unreachAutoAck')) {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = msg.deviceName + ' is ST_UR';\n  return msg2;\n} else if (msg.payload === true && msg.datapoint === 'UNREACH') {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'UR: ' + msg.deviceName;\n  return msg2;\n} else if (msg.payload === false && msg.datapoint === 'UNREACH') {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'REACH: ' + msg.deviceName;\n  return msg2;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "x": 370,
@@ -1406,6 +1409,7 @@
         "z": "721e71e2.b201b8",
         "name": "Auto ACK S_UNREACH",
         "label": "Auto Acknowledge STICKY_UNREACH",
+        "tooltip": "",
         "group": "40844f8.1cf98b",
         "order": 1,
         "width": "6",
@@ -1422,37 +1426,12 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 150,
+        "x": 430,
         "y": 920,
         "wires": [
             [
-                "b5a65dd1.bd84e"
+                "d53a62a4.771478"
             ]
-        ]
-    },
-    {
-        "id": "b5a65dd1.bd84e",
-        "type": "change",
-        "z": "721e71e2.b201b8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "unreachAutoAck",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 530,
-        "y": 920,
-        "wires": [
-            []
         ]
     },
     {
@@ -1479,7 +1458,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Rotate Log",
-        "func": "var dashboardLog = context.get('dashboardLog')|| [];\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n  // Delete oldest message if > 20\n  dashboardLog.shift();\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
+        "func": "let dashboardLog = context.get('dashboardLog')|| [];\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n  // Delete oldest message if > 20\n  dashboardLog.shift();\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 570,
@@ -1495,7 +1474,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Log Currently UNREACH",
-        "func": "var msg2 = {},\n    unreachCount = context.get('unreachCount') || 0;\n    \nif (msg.payload === true) {\n  unreachCount += 1;\n  context.set('unreachCount', unreachCount);\n  msg2.topic = msg.topic;\n  msg2.addLog = true;\n  msg2.payload = unreachCount;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.deviceName = msg.deviceName;\n  return msg2;\n} else if (msg.payload === false) {\n  unreachCount -= 1;\n  context.set('unreachCount', unreachCount);\n  msg2.payload = unreachCount;\n  msg2.topic = msg.topic;\n  msg2.delLog = true;\n  return msg2;\n}\n",
+        "func": "const msg2 = {};\nlet unreachCount = context.get('unreachCount') || 0;\n\nif (msg.payload === true) {\n  unreachCount += 1;\n  context.set('unreachCount', unreachCount);\n  msg2.topic = msg.topic;\n  msg2.addLog = true;\n  msg2.payload = unreachCount;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.deviceName = msg.deviceName;\n  return msg2;\n} else if (msg.payload === false) {\n  unreachCount -= 1;\n  context.set('unreachCount', unreachCount);\n  msg2.payload = unreachCount;\n  msg2.topic = msg.topic;\n  msg2.delLog = true;\n  return msg2;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "x": 350,
@@ -1511,7 +1490,7 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Rotate Log",
-        "func": "'use strict';\n// Set the maximum length of the log\nconst logMaxLength = 20;\n\n// To dynamically add and remove entries\n// an identifier to distinguish the entries\n// needs to be set. Typically 'topic' is used\nconst logIdentifier = 'topic';\n\n\nvar dashboardLog = context.get('dashboardLog')|| [];\n\nif (!msg.delLog) {\n  dashboardLog.push(msg);\n  if (dashboardLog.length > logMaxLength) {\n  // Delete oldest message if > 20\n    dashboardLog.shift();\n  }\n} else if (msg.delLog) {\n//  if (dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier])) {\n    dashboardLog.splice(dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier]), 1);\n//  }\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
+        "func": "'use strict';\n// Set the maximum length of the log\nconst logMaxLength = 20;\n\n// To dynamically add and remove entries\n// an identifier to distinguish the entries\n// needs to be set. Typically 'topic' is used\nconst logIdentifier = 'topic';\n\n\nlet dashboardLog = context.get('dashboardLog')|| [];\n\nif (!msg.delLog) {\n  dashboardLog.push(msg);\n  if (dashboardLog.length > logMaxLength) {\n  // Delete oldest message if > 20\n    dashboardLog.shift();\n  }\n} else if (msg.delLog) {\n//  if (dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier])) {\n  dashboardLog.splice(dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier]), 1);\n//  }\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 570,
@@ -1602,6 +1581,7 @@
         "height": "1",
         "passthru": false,
         "label": "Reset Logs",
+        "tooltip": "",
         "color": "",
         "bgcolor": "",
         "icon": "",
@@ -1651,7 +1631,7 @@
         "z": "721e71e2.b201b8",
         "name": "",
         "filetype": "text",
-        "split": true,
+        "split": "true",
         "filename": "/var/log/messages",
         "x": 1010,
         "y": 800,
@@ -1740,11 +1720,11 @@
         "id": "e570c8c5.d2137",
         "type": "function",
         "z": "721e71e2.b201b8",
-        "name": "Rotate Entries",
-        "func": "var dashboardLog = context.get('dashboardLog')|| [];\nvar msg2 = {};\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n    // Delete oldest message if > 20\n    dashboardLog.shift();\n    //dashboardLog.length = 20;\n} \n\nif (msg.resetlog) {\n    dashboardLog = [];\n}\n \n// store the value back\ncontext.set('dashboardLog',dashboardLog);\n \n// make it part of the outgoing msg object\nmsg2.payload = dashboardLog.reverse();\nreturn msg2;",
+        "name": "Rotate Log",
+        "func": "let dashboardLog = context.get('dashboardLog')|| [];\nconst msg2 = {};\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n  // Delete oldest message if > 20\n  dashboardLog.shift();\n  //dashboardLog.length = 20;\n}\n\nif (msg.resetlog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg2.payload = dashboardLog.reverse();\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1580,
+        "x": 1570,
         "y": 860,
         "wires": [
             [
@@ -1815,6 +1795,7 @@
         "height": 0,
         "passthru": false,
         "label": "Reset",
+        "tooltip": "",
         "color": "",
         "bgcolor": "",
         "icon": "",
@@ -1874,6 +1855,7 @@
         "height": 0,
         "passthru": false,
         "label": "Clear Error Log",
+        "tooltip": "",
         "color": "",
         "bgcolor": "",
         "icon": "",
@@ -1921,6 +1903,7 @@
         "z": "721e71e2.b201b8",
         "name": "",
         "label": "Send Email With Logged Errors",
+        "tooltip": "",
         "group": "109dc147.190c8f",
         "order": 10,
         "width": 0,
@@ -2040,6 +2023,51 @@
         ]
     },
     {
+        "id": "d53a62a4.771478",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "#:(file)::unreachAutoAck",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5d9b78e.8f4008",
+        "type": "inject",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "topic": "",
+        "payload": "#:(file)::unreachAutoAck",
+        "payloadType": "flow",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 920,
+        "wires": [
+            [
+                "a0ba1733.3f27d"
+            ]
+        ]
+    },
+    {
         "id": "6719ae8b.ab2f18",
         "type": "ui_group",
         "z": "",
@@ -2088,6 +2116,8 @@
         "rpcServerHost": "127.0.0.1",
         "rpcBinPort": "2047",
         "rpcXmlPort": "2048",
+        "queueTimeout": "5000",
+        "queuePause": "250",
         "contextStore": "default"
     },
     {
