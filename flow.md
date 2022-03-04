@@ -9,13 +9,22 @@
         "type": "inject",
         "z": "721e71e2.b201b8",
         "name": "Every 30 sec",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
         "repeat": "30",
         "crontab": "",
         "once": true,
         "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
         "x": 140,
         "y": 60,
         "wires": [
@@ -46,6 +55,7 @@
         ],
         "seg1": "",
         "seg2": "",
+        "className": "",
         "x": 710,
         "y": 180,
         "wires": []
@@ -72,6 +82,7 @@
         ],
         "seg1": "",
         "seg2": "",
+        "className": "",
         "x": 710,
         "y": 220,
         "wires": []
@@ -98,6 +109,7 @@
         ],
         "seg1": "",
         "seg2": "",
+        "className": "",
         "x": 710,
         "y": 260,
         "wires": []
@@ -124,6 +136,7 @@
         ],
         "seg1": "",
         "seg2": "",
+        "className": "",
         "x": 700,
         "y": 460,
         "wires": []
@@ -136,6 +149,8 @@
         "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  const k = 1000,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.totalmem);\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 410,
         "y": 500,
         "wires": [
@@ -152,6 +167,8 @@
         "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  const k = 1000,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nmsg.payload = formatBytes(msg.payload.freemem);\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 410,
         "y": 540,
         "wires": [
@@ -172,6 +189,7 @@
         "label": "Total Memory",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 700,
         "y": 500,
         "wires": []
@@ -188,6 +206,7 @@
         "label": "Free Memory",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 710,
         "y": 540,
         "wires": []
@@ -200,6 +219,8 @@
         "func": "let seconds = msg.payload.uptime;\nconst msg2 = {};\n\nconst days = Math.floor(seconds / (3600 * 24));\nseconds -= days * 3600 * 24;\nconst hrs = Math.floor(seconds / 3600);\nseconds -= hrs * 3600;\nconst mnts = Math.floor(seconds / 60);\nseconds -= mnts * 60;\nmsg2.payload = days + 'd / ' + hrs +'h / ' + mnts + 'min / ' + seconds + 's';\n\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 1322,
         "y": 180,
         "wires": [
@@ -220,6 +241,7 @@
         "label": "Uptime",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 1620,
         "y": 180,
         "wires": []
@@ -236,6 +258,7 @@
         "label": "Hostname",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 1610,
         "y": 220,
         "wires": []
@@ -252,6 +275,7 @@
         "label": "Platform",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 1620,
         "y": 260,
         "wires": []
@@ -268,6 +292,7 @@
         "label": "Arch",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 1630,
         "y": 300,
         "wires": []
@@ -284,6 +309,7 @@
         "label": "Kernel",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 1630,
         "y": 340,
         "wires": []
@@ -300,6 +326,7 @@
         "label": "No. of Cores",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 1610,
         "y": 400,
         "wires": []
@@ -316,6 +343,7 @@
         "label": "CPU",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 1630,
         "y": 440,
         "wires": []
@@ -343,6 +371,7 @@
         "removeOlderUnit": "86400",
         "cutout": "",
         "useOneColor": false,
+        "useUTC": false,
         "colors": [
             "#1f77b4",
             "#aec7e8",
@@ -354,12 +383,12 @@
             "#9467bd",
             "#c5b0d5"
         ],
-        "useOldStyle": false,
-        "outputs": 2,
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
         "x": 680,
         "y": 140,
         "wires": [
-            [],
             []
         ]
     },
@@ -386,6 +415,7 @@
         "removeOlderUnit": "86400",
         "cutout": "",
         "useOneColor": false,
+        "useUTC": false,
         "colors": [
             "#1f77b4",
             "#aec7e8",
@@ -397,12 +427,12 @@
             "#9467bd",
             "#c5b0d5"
         ],
-        "useOldStyle": false,
-        "outputs": 2,
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
         "x": 690,
         "y": 420,
         "wires": [
-            [],
             []
         ]
     },
@@ -542,14 +572,16 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Extract RSSI values",
-        "func": "'use strict';\nconst rssi = msg.payload,\n      myRSSIObj = {};\n\nlet ccu = '',\n    myDBValues = [],\n    msg2 = {};\n\nfor (const key of Object.keys(rssi)) {\n  if (Object.keys(rssi[key]).length === 1) {\n    ccu = Object.keys(rssi[key])[0];\n    myDBValues.push(rssi[key][ccu][1]);\n    if (rssi[key][ccu][0] < 0) {\n      myDBValues.push(rssi[key][ccu][0]);\n    } else if (rssi[key][ccu][0] > 0) {\n      myDBValues.push('n/a');\n    }\n    myRSSIObj[key] = myDBValues;\n    myDBValues = [];\n  }\n}\n\nmsg2 = {\n  payload: myRSSIObj,\n  topic: msg.topic,\n  ccu: ccu\n};\n\nreturn msg2;\n",
+        "func": "const rssi = msg.payload,\n             DBValues = [];\n\nlet msg2 = {},\n    centrals = [];\n\n// Identify available centrals: CCU, Gatesways, etc\n// If multiple centrals exist then the \"BidCoS-RF\" object exists\nif (rssi['BidCoS-RF']) {\n  centrals = Object.keys(rssi['BidCoS-RF']);\n} else {\n  // Object is unordered: Make sure we do not catch the CCU\n  const temp0 = Object.keys(rssi)[0];\n  const temp1 = Object.keys(rssi)[1];\n  if (Object.keys(rssi[temp0]).length === 1) {\n    centrals = (Object.keys(rssi[temp0]));\n  } else if (Object.keys(rssi[temp1]).length === 1) {\n    centrals = (Object.keys(rssi[temp1]));\n  } else {\n    node.error('No central identified');\n  }\n}\n\nfor (const central of centrals) {\n  for (const MyDevice of Object.keys((rssi)[central])) {\n    if (MyDevice !== 'BidCoS-RF') {\n      const device = {\n        central: central,\n        device: MyDevice,\n        down: (rssi[central][MyDevice][1] === 65536)? 'N/A':rssi[central][MyDevice][1],\n        up: (rssi[central][MyDevice][0] === 65536)? 'N/A':rssi[central][MyDevice][0]\n      };\n      DBValues.push(device);\n    }\n  }\n}\n\nmsg2 = {\n  payload: DBValues,\n  topic: msg.topic\n};\n\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 420,
         "y": 640,
         "wires": [
             [
-                "5fd974a1.743d8c"
+                "6982e9d1.146ed"
             ]
         ]
     },
@@ -577,7 +609,7 @@
         "y": 640,
         "wires": [
             [
-                "598712df.312fb4"
+                "15e18e55.7728e2"
             ]
         ]
     },
@@ -585,7 +617,7 @@
         "id": "934645d.5a566b8",
         "type": "ui_chart",
         "z": "721e71e2.b201b8",
-        "name": "Chart",
+        "name": "Duty Cycle (1 hour)",
         "group": "4bbfb1c3.d86a",
         "order": 2,
         "width": 0,
@@ -604,6 +636,7 @@
         "removeOlderUnit": "3600",
         "cutout": 0,
         "useOneColor": false,
+        "useUTC": false,
         "colors": [
             "#1f77b4",
             "#aec7e8",
@@ -615,40 +648,14 @@
             "#9467bd",
             "#c5b0d5"
         ],
-        "useOldStyle": false,
-        "outputs": 2,
-        "x": 1630,
-        "y": 621,
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1570,
+        "y": 620,
         "wires": [
-            [],
             []
         ]
-    },
-    {
-        "id": "dee433fb.ab2e98",
-        "type": "ui_gauge",
-        "z": "721e71e2.b201b8",
-        "name": "Gauge",
-        "group": "4bbfb1c3.d86a",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Duty Cycle",
-        "label": "%",
-        "format": "{{value}}",
-        "min": 0,
-        "max": "100",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "30",
-        "seg2": "70",
-        "x": 1630,
-        "y": 661,
-        "wires": []
     },
     {
         "id": "f9ee339c.de0bf",
@@ -878,34 +885,6 @@
         "wires": []
     },
     {
-        "id": "598712df.312fb4",
-        "type": "change",
-        "z": "721e71e2.b201b8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload[0].DUTY_CYCLE",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1342,
-        "y": 640,
-        "wires": [
-            [
-                "934645d.5a566b8",
-                "dee433fb.ab2e98"
-            ]
-        ]
-    },
-    {
         "id": "547cc5b3.c3e6dc",
         "type": "change",
         "z": "721e71e2.b201b8",
@@ -963,37 +942,20 @@
         "type": "function",
         "z": "721e71e2.b201b8",
         "name": "Reformat payload",
-        "func": "'use strict';\nfunction formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  const k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nconst myArray = msg.payload;\nconst msg2 = {},\n    msg3 = {};\n\n// Reformat values to human readable\nconst newArray = myArray.map(function(v) {\n  return {\n    filesystem: v.filesystem,\n    size: formatBytes(v.size * 1024),\n    used: formatBytes(v.used * 1024),\n    available: formatBytes(v.available * 1024),\n    usedPercent: (v.capacity * 100).toFixed(0),\n    mount: v.mount\n  };\n});\nmsg2.payload = newArray;\n\n// Find '/usr/local'\nconst index = newArray.findIndex((x) => x.mount ==='/usr/local');\nmsg3.payload = newArray[index].usedPercent;\n\nreturn [msg2, msg3];\n",
+        "func": "function formatBytes(bytes, decimals) {\n  if(bytes === 0) return '0 Bytes';\n  const k = 1024,\n      dm = decimals || 2,\n      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],\n      i = Math.floor(Math.log(bytes) / Math.log(k));\n  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];\n}\n\nconst myArray = msg.payload;\nconst msg2 = {},\n    msg3 = {};\n\n// Reformat values to human readable\nconst newArray = myArray.map(function(v) {\n  return {\n    filesystem: v.filesystem,\n    size: formatBytes(v.size * 1024),\n    used: formatBytes(v.used * 1024),\n    available: formatBytes(v.available * 1024),\n    usedPercent: (v.capacity * 100).toFixed(0),\n    mount: v.mount\n  };\n});\nmsg2.payload = newArray;\n\n// Find '/usr/local'\nconst index = newArray.findIndex((x) => x.mount ==='/usr/local');\nmsg3.payload = newArray[index].usedPercent;\n\nreturn [msg2, msg3];\n",
         "outputs": 2,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 1332,
         "y": 540,
         "wires": [
             [
-                "98458e0d.043298"
+                "1f8dd99c.60645e"
             ],
             [
                 "27ac74b1.18397c"
             ]
-        ]
-    },
-    {
-        "id": "98458e0d.043298",
-        "type": "ui_template",
-        "z": "721e71e2.b201b8",
-        "group": "86c746d.7ab5db8",
-        "name": "Disk Free",
-        "order": 3,
-        "width": "8",
-        "height": "12",
-        "format": "<h3>Disk Free</h3>\n<table id=\"myTableDisk\" width=\"100%\" border=\"1\">\n  <tbody>\n    <tr>\n      <th scope=\"col\">Mount</th>\n      <th scope=\"col\">Size</th>\n      <th scope=\"col\">Used</th>\n      <th scope=\"col\">Free</th>\n      <th scope=\"col\">Use %</th>\n    </tr>\n    <tr ng-repeat=\"mount in msg.payload\">\n      <th   align=\"left\" scope=\"row\">{{mount.mount}}</th>\n      <td   align=\"right\">{{mount.size}}</td>\n      <td   align=\"right\">{{mount.used}}</td>\n      <td   align=\"right\">{{mount.available}}</td>\n      <td   ng-class=\"{'excellent': mount.usedPercent < 75,\n                       'average': mount.usedPercent >= 76 && mount.usedPercent <= 95,\n                       'bad': mount.usedPercent >= 96}\"\n            align=\"right\">{{mount.usedPercent}}</td>\n    </tr>\n  </tbody>\n</table>",
-        "storeOutMessages": true,
-        "fwdInMessages": false,
-        "templateScope": "local",
-        "x": 1620,
-        "y": 520,
-        "wires": [
-            []
         ]
     },
     {
@@ -1018,6 +980,7 @@
         ],
         "seg1": "75",
         "seg2": "90",
+        "className": "",
         "x": 1580,
         "y": 560,
         "wires": []
@@ -1034,6 +997,7 @@
         "label": "IP",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
+        "className": "",
         "x": 730,
         "y": 340,
         "wires": []
@@ -1250,44 +1214,6 @@
         ]
     },
     {
-        "id": "5fd974a1.743d8c",
-        "type": "ui_template",
-        "z": "721e71e2.b201b8",
-        "group": "4bbfb1c3.d86a",
-        "name": "RSSI Table",
-        "order": 3,
-        "width": "6",
-        "height": "8",
-        "format": "<h3>RSSI Values</h3>\n<table id=\"myTable\" width=\"100%\" border=\"1\">\n  <tbody>\n    <tr>\n      <th colspan=\"1\" rowspan=\"2\" class=\"ng-class: excellent;\" scope=\"col\">&nbsp;</th>\n      <th ng-class=\"excellent\" colspan=\"2\" scope=\"col\">{{msg.ccu}}</th>\n    </tr>\n    <tr>\n      <td style=\"vertical-align: middle; text-align: center;\"><i class=\"fa fa-arrow-circle-up\" aria-hidden=\"true\"></i></td>\n      <td style=\"vertical-align: middle; text-align: center;\"><i class=\"fa fa-arrow-circle-down\" aria-hidden=\"true\"></i></td>\n    <tr ng-repeat=\"(key, value) in msg.payload\" >\n      <th scope=\"row\">{{key}}</th>\n      <td   ng-class=\"{'excellent': value[0] >= -50,\n                       'good': value[0] <= -51 && value[0] >= -100,\n                       'average':  value[0] <= -101 && value[0] >= -120,\n                       'bad':  value[0] <= -121}\"\n            align=\"center\">{{value[0]}}</td>\n      <td   ng-class=\"{'excellent': value[1] >= -50,\n                       'good': value[1] <= -51 && value[1] >= -100,\n                       'average':  value[1] <= -101 && value[1] >= -120,\n                       'bad':  value[1] <= -120}\"\n            align=\"center\">{{value[1]}}</td>\n    </tr>\n  </tbody>\n</table>\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "templateScope": "local",
-        "x": 710,
-        "y": 640,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "6ae77c11.8e8c54",
-        "type": "ui_template",
-        "z": "721e71e2.b201b8",
-        "group": "937d90ca.8d8b",
-        "name": "Defince CSS Style",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "format": "<style>\n.excellent {background-color:#00cc44;}\n.good {background-color:#66ff66;}\n.average {background-color:#ff8c66;}\n.bad {background-color:#ff6666;}\n</style>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "templateScope": "global",
-        "x": 470,
-        "y": 60,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "470b812a.842fe8",
         "type": "ccu-rpc-event",
         "z": "721e71e2.b201b8",
@@ -1310,6 +1236,8 @@
         "channelNameRx": "str",
         "channelType": "MAINTENANCE",
         "channelTypeRx": "str",
+        "channelIndex": "",
+        "channelIndexRx": "str",
         "datapoint": "UNREACH",
         "datapointRx": "str",
         "change": true,
@@ -1358,6 +1286,8 @@
         "channelNameRx": "str",
         "channelType": "MAINTENANCE",
         "channelTypeRx": "str",
+        "channelIndex": "",
+        "channelIndexRx": "str",
         "datapoint": "STICKY_UNREACH",
         "datapointRx": "str",
         "change": false,
@@ -1380,6 +1310,8 @@
         "func": "const msg2 = {};\nif (msg.payload === true &&\n    msg.datapoint === 'STICKY_UNREACH' &&\n    flow.get('unreachAutoAck', 'fileContext')) {\n  msg2.payload = `var dpAl = dom.GetObject(\"AL-${msg.channel}.${msg.datapoint}\");\n                dpAl.AlReceipt();`;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'ST_UR ack: ' + msg.deviceName;\n  return msg2;\n} else if (msg.payload === true &&\n           msg.datapoint === 'STICKY_UNREACH' &&\n           !flow.get('unreachAutoAck')) {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = msg.deviceName + ' is ST_UR';\n  return msg2;\n} else if (msg.payload === true && msg.datapoint === 'UNREACH') {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'UR: ' + msg.deviceName;\n  return msg2;\n} else if (msg.payload === false && msg.datapoint === 'UNREACH') {\n  msg2.payload = null;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.logMsg = 'REACH: ' + msg.deviceName;\n  return msg2;\n}\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 370,
         "y": 840,
         "wires": [
@@ -1417,6 +1349,7 @@
         "passthru": true,
         "decouple": "false",
         "topic": "autoAck",
+        "topicType": "str",
         "style": "",
         "onvalue": "true",
         "onvalueType": "bool",
@@ -1426,6 +1359,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
+        "animate": true,
+        "className": "",
         "x": 430,
         "y": 920,
         "wires": [
@@ -1446,7 +1381,9 @@
         "format": "<h3>(STICKY) UNREACH Event Log</h3>\n<table>\n  <tbody>\n    <tr>\n      <td><strong>Time Stamp</strong></td>\n      <td><strong>Device</strong></td>\n    </tr>\n    <tr ng-repeat=\"value in msg.payload\">\n      <td>{{value.ts}}</td>\n      <td>{{value.logMsg}}</td>\n    </tr>\n  </tbody>\n</table>",
         "storeOutMessages": true,
         "fwdInMessages": false,
+        "resendOnRefresh": false,
         "templateScope": "local",
+        "className": "",
         "x": 770,
         "y": 840,
         "wires": [
@@ -1461,6 +1398,8 @@
         "func": "let dashboardLog = context.get('dashboardLog')|| [];\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n  // Delete oldest message if > 20\n  dashboardLog.shift();\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 570,
         "y": 840,
         "wires": [
@@ -1477,6 +1416,8 @@
         "func": "const msg2 = {};\nlet unreachCount = context.get('unreachCount') || 0;\n\nif (msg.payload === true) {\n  unreachCount += 1;\n  context.set('unreachCount', unreachCount);\n  msg2.topic = msg.topic;\n  msg2.addLog = true;\n  msg2.payload = unreachCount;\n  msg2.ts = (new Date(msg.ts)).toLocaleString('de-DE');\n  msg2.deviceName = msg.deviceName;\n  return msg2;\n} else if (msg.payload === false) {\n  unreachCount -= 1;\n  context.set('unreachCount', unreachCount);\n  msg2.payload = unreachCount;\n  msg2.topic = msg.topic;\n  msg2.delLog = true;\n  return msg2;\n}\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 350,
         "y": 760,
         "wires": [
@@ -1493,6 +1434,8 @@
         "func": "'use strict';\n// Set the maximum length of the log\nconst logMaxLength = 20;\n\n// To dynamically add and remove entries\n// an identifier to distinguish the entries\n// needs to be set. Typically 'topic' is used\nconst logIdentifier = 'topic';\n\n\nlet dashboardLog = context.get('dashboardLog')|| [];\n\nif (!msg.delLog) {\n  dashboardLog.push(msg);\n  if (dashboardLog.length > logMaxLength) {\n  // Delete oldest message if > 20\n    dashboardLog.shift();\n  }\n} else if (msg.delLog) {\n//  if (dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier])) {\n  dashboardLog.splice(dashboardLog.findIndex((v) => v[logIdentifier] === msg[logIdentifier]), 1);\n//  }\n}\n\nif (msg.resetLog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg = {};\nmsg.payload = dashboardLog;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 570,
         "y": 760,
         "wires": [
@@ -1513,7 +1456,9 @@
         "format": "<h3>Currently UNREACH Devices</h3>\n<table>\n  <tbody>\n    <tr>\n      <td><strong>Time Stamp</strong></td>\n      <td><strong>Device</strong></td>\n    </tr>\n    <tr ng-repeat=\"value in msg.payload\">\n      <td>{{value.ts}}</td>\n      <td>{{value.deviceName}}</td>\n    </tr>\n  </tbody>\n</table>",
         "storeOutMessages": true,
         "fwdInMessages": false,
+        "resendOnRefresh": false,
         "templateScope": "local",
+        "className": "",
         "x": 780,
         "y": 760,
         "wires": [
@@ -1584,10 +1529,12 @@
         "tooltip": "",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "",
         "payload": "true",
         "payloadType": "bool",
         "topic": "",
+        "topicType": "str",
         "x": 110,
         "y": 960,
         "wires": [
@@ -1626,22 +1573,6 @@
         "wires": []
     },
     {
-        "id": "a20ff5fa.856ce8",
-        "type": "tail",
-        "z": "721e71e2.b201b8",
-        "name": "",
-        "filetype": "text",
-        "split": "true",
-        "filename": "/var/log/messages",
-        "x": 1010,
-        "y": 800,
-        "wires": [
-            [
-                "3b77e1a4.fd8716"
-            ]
-        ]
-    },
-    {
         "id": "3b77e1a4.fd8716",
         "type": "switch",
         "z": "721e71e2.b201b8",
@@ -1651,7 +1582,7 @@
         "rules": [
             {
                 "t": "regex",
-                "v": "^.*Error\\:.*$",
+                "v": "^.*Error\\:.*",
                 "vt": "str",
                 "case": true
             }
@@ -1712,6 +1643,7 @@
         ],
         "seg1": "",
         "seg2": "",
+        "className": "",
         "x": 1590,
         "y": 780,
         "wires": []
@@ -1724,6 +1656,8 @@
         "func": "let dashboardLog = context.get('dashboardLog')|| [];\nconst msg2 = {};\n\ndashboardLog.push(msg);\nif (dashboardLog.length > 20) {\n  // Delete oldest message if > 20\n  dashboardLog.shift();\n  //dashboardLog.length = 20;\n}\n\nif (msg.resetlog) {\n  dashboardLog = [];\n}\n\n// store the value back\ncontext.set('dashboardLog', dashboardLog);\n\n// make it part of the outgoing msg object\nmsg2.payload = dashboardLog.reverse();\nreturn msg2;\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 1570,
         "y": 860,
         "wires": [
@@ -1798,10 +1732,12 @@
         "tooltip": "",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "",
         "payload": "true",
         "payloadType": "bool",
         "topic": "",
+        "topicType": "str",
         "x": 1010,
         "y": 760,
         "wires": [
@@ -1858,10 +1794,12 @@
         "tooltip": "",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "",
         "payload": "true",
         "payloadType": "bool",
         "topic": "",
+        "topicType": "str",
         "x": 1000,
         "y": 860,
         "wires": [
@@ -1911,6 +1849,7 @@
         "passthru": true,
         "decouple": "false",
         "topic": "",
+        "topicType": "str",
         "style": "",
         "onvalue": "true",
         "onvalueType": "bool",
@@ -1920,6 +1859,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
+        "animate": true,
+        "className": "",
         "x": 1050,
         "y": 900,
         "wires": [
@@ -1961,6 +1902,8 @@
         "func": "if (flow.get('errorEmail')) {\n  return msg;\n}",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
         "x": 1570,
         "y": 820,
         "wires": [
@@ -1981,6 +1924,7 @@
         "label": "<h3>Monitor /var/log/messages</h3>",
         "format": "",
         "layout": "row-left",
+        "className": "",
         "x": 1040,
         "y": 940,
         "wires": []
@@ -1997,7 +1941,9 @@
         "format": "<ul>\n <li ng-repeat=\"x in msg.payload\">\n <font color=\"red\">{{x.topic}}</font>\n    <ul>\n        <li>{{x.payload}}</li>\n    </ul>\n </li>\n</ul>",
         "storeOutMessages": false,
         "fwdInMessages": false,
+        "resendOnRefresh": false,
         "templateScope": "local",
+        "className": "",
         "x": 1760,
         "y": 860,
         "wires": [
@@ -2052,13 +1998,13 @@
         "type": "inject",
         "z": "721e71e2.b201b8",
         "name": "",
-        "topic": "",
-        "payload": "#:(file)::unreachAutoAck",
-        "payloadType": "flow",
         "repeat": "",
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
+        "topic": "",
+        "payload": "#:(file)::unreachAutoAck",
+        "payloadType": "flow",
         "x": 160,
         "y": 920,
         "wires": [
@@ -2068,9 +2014,179 @@
         ]
     },
     {
+        "id": "95f86589.b6c37",
+        "type": "tail",
+        "z": "721e71e2.b201b8",
+        "name": "",
+        "filetype": "text",
+        "split": "true",
+        "filename": "/var/log/messages",
+        "inputs": 0,
+        "x": 1010,
+        "y": 800,
+        "wires": [
+            [
+                "3b77e1a4.fd8716"
+            ]
+        ]
+    },
+    {
+        "id": "b30e50c8.b1e23",
+        "type": "ui_table",
+        "z": "721e71e2.b201b8",
+        "group": "b533a88a.2e9378",
+        "name": "RSSI Table",
+        "order": 2,
+        "width": "6",
+        "height": "11",
+        "columns": [],
+        "outputs": 1,
+        "cts": true,
+        "x": 750,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6982e9d1.146ed",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "ui_control",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ui_control",
+                "pt": "msg",
+                "to": "{\"tabulator\":{\"columnResized\":\"function(column){var newColumn = {field: column._column.field, visible: column._column.visible, width: column._column.width, widthFixed: column._column.widthFixed, widthStyled: column._column.widthStyled};this.send({topic:this.config.topic,ui_control:{callback:'columnResized',columnWidths:newColumn}});}\",\"columnMoved\":\"function(column, columns){var newColumns=[];columns.forEach(function (column) {newColumns.push({'field': column._column.field});});this.send({topic:this.config.topic,ui_control:{callback:'columnMoved',columns:newColumns}});}\",\"layout\":\"fitColumns\",\"columns\":[{\"title\":\"Device\",\"field\":\"device\",\"formatter\":\"function(cell, formatterParams, onRendered){return cell.getValue();}\"},{\"title\":\"<div style='text-align:center'><i class='fa fa-arrow-circle-up' aria-hidden='true'></i></div>\",\"align\":\"center\",\"field\":\"up\",\"formatter\":\"function(cell, formatterParams){ var html_excel = 'style=\\\"color:#00cc44\\\"></i>'; var html_good = 'style=\\\"color:#66ff66\\\"></i>'; var html_aver = 'style=\\\"color:#ff8c66\\\"></i>'; var html_bad = 'style=\\\"color:#ff6666\\\"></i>'; var html='<i class=\\\"fa fa-circle fa-fw\\\" '; var value = cell.getValue(); if (value >= -50) { value = value + html + html_excel} else if (value <= -51 && value >= -100) { value = value + html + html_good; } else if (value <= -101 && value >= -120) { value = value + html + html_aver; } else if (value <= -120) { value = value + html + html_bad}; return value;}\"},{\"title\":\"<div style='text-align:center'><i class='fa fa-arrow-circle-down' aria-hidden='true'></i></div>\",\"field\":\"down\",\"align\":\"center\",\"formatter\":\"function(cell, formatterParams){ var html_excel = 'style=\\\"color:#00cc44\\\"></i>'; var html_good = 'style=\\\"color:#66ff66\\\"></i>'; var html_aver = 'style=\\\"color:#ff8c66\\\"></i>'; var html_bad = 'style=\\\"color:#ff6666\\\"></i>'; var html='<i class=\\\"fa fa-circle fa-fw\\\" '; var value = cell.getValue(); if (value >= -50) { value = value + html + html_excel} else if (value <= -51 && value >= -100) { value = value + html + html_good; } else if (value <= -101 && value >= -120) { value = value + html + html_aver; } else if (value <= -120) { value = value + html + html_bad}; return value;}\"}],\"movableColumns\":true,\"groupBy\":\"central\"},\"customHeight\":55}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 640,
+        "wires": [
+            [
+                "b30e50c8.b1e23"
+            ]
+        ]
+    },
+    {
+        "id": "1f8dd99c.60645e",
+        "type": "change",
+        "z": "721e71e2.b201b8",
+        "name": "ui_control",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ui_control",
+                "pt": "msg",
+                "to": "{\"tabulator\":{\"columnResized\":\"function(column){var newColumn = {field: column._column.field, visible: column._column.visible, width: column._column.width, widthFixed: column._column.widthFixed, widthStyled: column._column.widthStyled};this.send({topic:this.config.topic,ui_control:{callback:'columnResized',columnWidths:newColumn}});}\",\"columnMoved\":\"function(column, columns){var newColumns=[];columns.forEach(function (column) {newColumns.push({'field': column._column.field});});this.send({topic:this.config.topic,ui_control:{callback:'columnMoved',columns:newColumns}});}\",\"layout\":\"fitColumns\",\"columns\":[{\"title\":\"Mount\",\"field\":\"mount\",\"formatter\":\"function(cell, formatterParams, onRendered){return cell.getValue();}\"},{\"title\":\"<div style='text-align:center'>Size</i></div>\",\"align\":\"center\",\"field\":\"size\",\"formatter\":\"function(cell, formatterParams, onRendered){return cell.getValue();}\"},{\"title\":\"<div style='text-align:center'>Used</i></div>\",\"field\":\"used\",\"align\":\"center\",\"formatter\":\"function(cell, formatterParams, onRendered){return cell.getValue();}\"},{\"title\":\"<div style='text-align:center'>Free</i></div>\",\"field\":\"available\",\"align\":\"center\",\"formatter\":\"function(cell, formatterParams, onRendered){return cell.getValue();}\"},{\"title\":\"<div style='text-align:center'>Used %</i></div>\",\"field\":\"usedPercent\",\"align\":\"center\",\"formatter\":\"function(cell, formatterParams){ var html_excel = 'style=\\\"color:#00cc44\\\"></i>'; var html_aver = 'style=\\\"color:#ff8c66\\\"></i>'; var html_bad = 'style=\\\"color:#ff6666\\\"></i>'; var html='<i class=\\\"fa fa-circle fa-fw\\\" '; var value = cell.getValue(); if (value <= 75) { value = value + '%' + html + html_excel} else if (value >= 76 && value < 94) { value = value + '%' + html + html_aver; } else if (value >= 95) { value = value + '%' + html + html_bad}; return value;}\"}],\"movableColumns\":true,\"groupBy\":\"\"},\"customHeight\":55}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1540,
+        "y": 520,
+        "wires": [
+            [
+                "5492165d.78661"
+            ]
+        ]
+    },
+    {
+        "id": "5492165d.78661",
+        "type": "ui_table",
+        "z": "721e71e2.b201b8",
+        "group": "86c746d.7ab5db8",
+        "name": "Disk Usage",
+        "order": 2,
+        "width": "8",
+        "height": "9",
+        "columns": [],
+        "outputs": 1,
+        "cts": true,
+        "x": 1690,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "15e18e55.7728e2",
+        "type": "function",
+        "z": "721e71e2.b201b8",
+        "name": "Extract DC values",
+        "func": "const DutyCycle = msg.payload,\n      OutMsgs = [],\n      msg2 = {};\n\nfor (const element of DutyCycle) {\n  const result = {\n    topic: element['ADDRESS'],\n    payload: element['DUTY_CYCLE']\n  };\n  OutMsgs.push(result);\n  // The default central (i.e. the CCU) will be returned on the second output\n  if (element['DEFAULT'] === true) {\n    msg2.topic = element['ADDRESS'];\n    msg2.payload = element['DUTY_CYCLE'];\n  }\n}\n\nreturn [OutMsgs, msg2];\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1330,
+        "y": 640,
+        "wires": [
+            [
+                "934645d.5a566b8",
+                "933be049.370c28"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "933be049.370c28",
+        "type": "ui_chart",
+        "z": "721e71e2.b201b8",
+        "name": "Duty Cycle (Current)",
+        "group": "4bbfb1c3.d86a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Duty Cycle (Current)",
+        "chartType": "horizontalBar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1580,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "6719ae8b.ab2f18",
         "type": "ui_group",
-        "z": "",
         "name": "CPU Load",
         "tab": "189e0ea3.dd5dd1",
         "order": 4,
@@ -2080,7 +2196,6 @@
     {
         "id": "44fa2766.cd3658",
         "type": "ui_group",
-        "z": "",
         "name": "Memory",
         "tab": "189e0ea3.dd5dd1",
         "order": 5,
@@ -2090,7 +2205,6 @@
     {
         "id": "109dc147.190c8f",
         "type": "ui_group",
-        "z": "",
         "name": "System Information",
         "tab": "189e0ea3.dd5dd1",
         "order": 1,
@@ -2100,7 +2214,6 @@
     {
         "id": "38263145.35ea0e",
         "type": "ccu-connection",
-        "z": "",
         "name": "localhost",
         "host": "localhost",
         "regaEnabled": true,
@@ -2112,10 +2225,15 @@
         "regaPoll": true,
         "regaInterval": "30",
         "rpcPingTimeout": "60",
-        "rpcInitAddress": "127.0.0.1",
-        "rpcServerHost": "127.0.0.1",
+        "rpcInitAddress": "192.168.178.18",
+        "rpcServerHost": "192.168.178.18",
         "rpcBinPort": "2047",
         "rpcXmlPort": "2048",
+        "tls": false,
+        "inSecure": false,
+        "authentication": false,
+        "username": "",
+        "password": "",
         "queueTimeout": "5000",
         "queuePause": "250",
         "contextStore": "default"
@@ -2123,18 +2241,17 @@
     {
         "id": "4bbfb1c3.d86a",
         "type": "ui_group",
-        "z": "",
-        "name": "CCU",
+        "name": "CCU Duty Cycle",
         "tab": "189e0ea3.dd5dd1",
         "order": 2,
         "disp": true,
         "width": "6",
-        "collapse": false
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "86c746d.7ab5db8",
         "type": "ui_group",
-        "z": "",
         "name": "Disk",
         "tab": "189e0ea3.dd5dd1",
         "order": 6,
@@ -2143,19 +2260,8 @@
         "collapse": false
     },
     {
-        "id": "937d90ca.8d8b",
-        "type": "ui_group",
-        "z": "",
-        "name": "Duty Cycle",
-        "tab": "8153eb0.fe96118",
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
         "id": "40844f8.1cf98b",
         "type": "ui_group",
-        "z": "",
         "name": "UNREACH",
         "tab": "189e0ea3.dd5dd1",
         "order": 3,
@@ -2164,18 +2270,21 @@
         "collapse": false
     },
     {
-        "id": "189e0ea3.dd5dd1",
-        "type": "ui_tab",
-        "z": "",
-        "name": "System",
-        "icon": "computer"
+        "id": "b533a88a.2e9378",
+        "type": "ui_group",
+        "name": "CCU RSSI",
+        "tab": "189e0ea3.dd5dd1",
+        "order": 7,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
-        "id": "8153eb0.fe96118",
+        "id": "189e0ea3.dd5dd1",
         "type": "ui_tab",
-        "z": "",
-        "name": "Funk",
-        "icon": "dashboard",
-        "order": 4
+        "name": "System",
+        "icon": "computer",
+        "order": 7
     }
 ]
